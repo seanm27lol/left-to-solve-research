@@ -32,7 +32,7 @@ In particular, $n^2(1-S_n)\to2$ and $n^4(S_n-1+2/[n(n-1)])\to8$. These sharper l
 
 ## A372239 — Both congruences for prime-indexed coefficients
 
-For a(n)=[x^n](1+2x)/((1−2x)√(1−4x)), let p be an odd prime and h=(p−1)/2. Write C_j=binom(2j,j). Expanding the prefactor gives a(p)=C_p+2^(p+1) Σ_{j=0}^{p−1} 2^(−j) C_j. In the field F_p, C_p=2 by the identity (1+x)^(2p)=(1+x^p)^2. For 0≤j<p, C_j=(−4)^j binom(−1/2,j)≡(−4)^j binom(h,j) since j! is invertible. In particular the j>h terms vanish. The sum is (1−2)^h=(−1)^h. Fermat gives 2^(p+1)≡4, so a(p)≡2+4(−1)^h, i.e. 6 for p≡1 (mod 4) and −2 for p≡3 (mod 4). Checks include p=3, a(3)=76≡1=−2, and p=5, a(5)=916≡1=6. A separate derivation factors (1−4x)^(−1/2) as (1−4x)^h (1−4x^p)^(−1/2) modulo p before coefficient extraction. [Mélika Tebni's defining entry and coefficient formula](https://oeis.org/A372239).
+For $a(n)=[x^n]\frac{1+2x}{(1-2x)\sqrt{1-4x}}$, let p be an odd prime and h=(p−1)/2. Write C_j=binom(2j,j). Expanding the prefactor gives a(p)=C_p+2^(p+1) Σ_{j=0}^{p−1} 2^(−j) C_j. In the field F_p, C_p=2 by the identity (1+x)^(2p)=(1+x^p)^2. For 0≤j<p, C_j=(−4)^j binom(−1/2,j)≡(−4)^j binom(h,j) since j! is invertible. In particular the j>h terms vanish. The sum is (1−2)^h=(−1)^h. Fermat gives 2^(p+1)≡4, so a(p)≡2+4(−1)^h, i.e. 6 for p≡1 (mod 4) and −2 for p≡3 (mod 4). Checks include p=3, a(3)=76≡1=−2, and p=5, a(5)=916≡1=6. A separate derivation factors (1−4x)^(−1/2) as (1−4x)^h (1−4x^p)^(−1/2) modulo p before coefficient extraction. [Mélika Tebni's defining entry and coefficient formula](https://oeis.org/A372239).
 
 ## A371918 — Greedy exponents of powers of two form a permutation
 
