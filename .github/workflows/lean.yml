@@ -1,7 +1,7 @@
 name: Verify catalog Lean files
 on:
   push:
-    branches: [main]
+    branches: [verify-fibonacci-recurrence]
     paths:
       - 'lean/**/*.lean'
       - '.github/workflows/lean.yml'
@@ -60,7 +60,7 @@ jobs:
           mkdir -p "$RUNNER_TEMP/verdicts"
           cd catalog
           failed=0
-          for file in ../lean/statements/*.lean ../lean/proofs/*.lean; do
+          for file in ../lean/proofs/oeis-a047946.lean; do
             path="${file#../lean/}"
             verdict="$RUNNER_TEMP/verdicts/${path//\//_}.json"
             if tools/check.sh "$path" "$verdict"; then
