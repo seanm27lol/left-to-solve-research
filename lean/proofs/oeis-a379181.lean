@@ -27,7 +27,7 @@ private theorem wordMem (w : List ℕ) (hw : ∀ d ∈ w, d < 10) : w ∈ words 
   induction w with
   | nil => simp [words]
   | cons a w ih =>
-    apply mem_map.mpr
+    apply Finset.mem_map.mpr
     refine ⟨(a,w), mem_product.mpr ⟨mem_range.mpr (hw a (by simp)), ?_⟩, rfl⟩
     exact ih (fun d hd => hw d (by simp [hd]))
 
@@ -54,13 +54,12 @@ private theorem total (q : ℝ) (n : ℕ) :
   | zero => simp [words]
   | succ n ih =>
     rw [words, sum_map, sum_product]
-    simp only [prepend, Function.Embedding.coeFn_mk, List.sum_cons, pow_add, ← mul_sum, ih,
-      ← sum_mul, pow_succ']
-    ring
+    change (∑ x ∈ range 10, ∑ y ∈ words n, q ^ (x + y.sum)) = _
+    simp only [pow_add, ← mul_sum, ih, ← sum_mul, pow_succ']
 
-private abbrev lo : ℝ := 9 / 10
-private abbrev hi : ℝ := 10 / 9
-private abbrev ceiling : ℝ := 999 / 100
+private abbrev lo : ℝ := 16 / 17
+private abbrev hi : ℝ := 17 / 16
+private abbrev ceiling : ℝ := 197 / 20
 
 private def weight (n : ℕ) (w : List ℕ) : ℝ :=
   lo ^ w.sum / lo ^ (4 * n) + hi ^ w.sum / hi ^ (5 * n)
@@ -69,7 +68,7 @@ private theorem covers (w : List ℕ) (n : ℕ) (hlen : w.length = n)
     (hw : qualifies w = true) : 1 ≤ weight n w := by
   obtain ⟨m, _, hm⟩ := List.any_eq_true.mp hw
   have heq : w.sum = m * n := by
-    have h := (Bool.and_eq_true.mp hm).2
+    have h := (Bool.and_eq_true_iff.mp hm).2
     simpa [hlen] using h
   unfold weight
   by_cases hm4 : m ≤ 4
@@ -90,7 +89,7 @@ private theorem envelope (n : ℕ) : (term n : ℝ) ≤ 2 * ceiling ^ n := by
   let S := (range (10 ^ n)).filter (fun k => (digitWord k).length = n ∧ qualifies (digitWord k) = true)
   let T := S.map encode
   have member {w} (hw : w ∈ T) : w.length = n ∧ qualifies w = true ∧ w ∈ words n := by
-    obtain ⟨k, hk, rfl⟩ := mem_map.mp hw
+    obtain ⟨k, hk, rfl⟩ := Finset.mem_map.mp hw
     have hk' := (mem_filter.mp hk).2
     change (digitWord k).length = n ∧ qualifies (digitWord k) = true ∧ digitWord k ∈ words n
     exact ⟨hk'.1, hk'.2, hk'.1 ▸ wordMem (digitWord k) (digitsBound k)⟩
@@ -105,7 +104,9 @@ private theorem envelope (n : ℕ) : (term n : ℝ) ≤ 2 * ceiling ^ n := by
       positivity
     _ = ((∑ d ∈ range 10, lo ^ d) / lo ^ 4) ^ n +
           ((∑ d ∈ range 10, hi ^ d) / hi ^ 5) ^ n := by
-      simp only [weight, sum_add_distrib, ← Finset.sum_div, total, pow_mul, div_pow]
+      simp only [weight, sum_add_distrib, ← Finset.sum_div]
+      rw [total lo n, total hi n]
+      simp only [pow_mul, div_pow]
     _ ≤ ceiling ^ n + ceiling ^ n := by
       apply add_le_add
       · apply pow_le_pow_left₀ (by positivity)
@@ -131,12 +132,13 @@ theorem disproof : ¬ (type_of% @OMA.S_oeis_a379181.main) := by
     | succ k ih =>
       have hr := (lt_div_iff₀ (pos (N + k) (by omega))).mp (hN (N + k) (by omega))
       rw [pow_succ, ← mul_assoc]
-      exact (mul_le_mul_of_nonneg_right ih hR.le).trans (by linarith)
+      exact (mul_le_mul_of_nonneg_right ih hR.le).trans (by
+        simpa only [Nat.add_assoc, mul_comm R] using hr.le)
   have cap (k : ℕ) : (term N : ℝ) ≤ (2 * ceiling ^ N) * (ceiling / R) ^ k := by
     have hx := (lower k).trans (envelope (N + k))
     rw [pow_add] at hx
-    rw [div_pow, ← mul_div_assoc, le_div_iff₀ (pow_pos hR k)]
-    linarith
+    rw [div_pow ceiling R k, ← mul_div_assoc, le_div_iff₀ (pow_pos hR k)]
+    simpa only [mul_assoc] using hx
   have z : Tendsto (fun k : ℕ => (2 * ceiling ^ N) * (ceiling / R) ^ k) atTop (𝓝 0) := by
     simpa using (tendsto_const_nhds (x := 2 * ceiling ^ N)).mul
       (tendsto_pow_atTop_nhds_zero_of_lt_one (by norm_num [ceiling, R] : 0 ≤ ceiling / R)
