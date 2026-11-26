@@ -1,0 +1,76 @@
+almost_perfect_numbers.py
+0 0 []
+1 3 []
+2 6 []
+3 70 []
+4 93 []
+5 540 []
+6 1957 []
+7 12146 []
+8 19068 []
+9 90501 []
+10 336851 []
+11 1370021 []
+
+binary_polynomials.py
+Power-of-three bit multiplicities: n=3..11. Fibonacci: n=1..11. A380056: n=1..129.
+Fibonacci n=2 factor after G: 0b10100000
+
+digit_growth.py
+9.82786850121986167 < lambda < 9.82786850121986171
+Verified the reported first five OEIS terms and the integer change-of-measure identity.
+
+divisor_averages_and_sequences.py
+179 divisor-mean constructions, 81 signed Stirling rows, odd primes to 1300, 84 geometric-law coefficients passed.
+
+eigenvalue_bounds.py
+trimmed blocks: 14448 max normalized sum 1.845991239143868e-15 above tol 0
+Kac principal blocks checked 2401
+
+extremal_graphs.py
+A182084: graph construction passed for 2 ≤ degree ≤ 60.
+Erdős 573: exact comparisons passed for 653 sizes
+
+four_squares.py
+1 575
+2 75089
+3 276478
+4 331776
+
+graph_enumeration.py
+boards 2 [(15, None), (15, None), (15, None)]
+boards 3 [(417, {1: 1, 2: 10, 3: 48, 4: 106, 5: 122, 6: 84, 7: 36, 8: 9, 9: 1}), (380, {2: 3, 3: 31, 4: 96, 5: 120, 6: 84, 7: 36, 8: 9, 9: 1}), (334, {3: 6, 4: 81, 5: 117, 6: 84, 7: 36, 8: 9, 9: 1})]
+boards 4 [(42176, None), (37872, None), (33159, None)]
+intervals 490 example 5
+
+necklaces.py
+count 4 False (6, 23)
+count 5 False (11, 77)
+count 6 False (26, 297)
+count 7 False (57, 1163)
+count 5 True (7, 45)
+count 6 True (18, 167)
+binary 1 (2, 1)
+binary 2 (3, 3)
+binary 3 (6, 6)
+binary 4 (9, 15)
+binary 5 (20, 28)
+binary 6 (34, 62)
+binary 7 (72, 120)
+binary 8 (129, 255)
+
+probability.py
+coupon partition 3570
+binomial race 288
+ballot all paths length 1..12
+tree rootings 700
+matroid laws 462
+
+sequences_and_determinants.py
+45 exact Hankel determinants, 40 permanents, 2 continued-fraction recurrences, and every binary word through length 14 passed.
+
+tree_domination.py
+435 18
+
+chebyshev_search 1000000000000
+bound 1000000000000 prefixes 40103813 trials 4259311 hits 0
