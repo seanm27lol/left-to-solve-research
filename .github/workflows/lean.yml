@@ -1,0 +1,81 @@
+name: Verify catalog Lean files
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'lean/**/*.lean'
+      - '.github/workflows/lean.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check out the catalog checker
+        uses: actions/checkout@v4
+        with:
+          repository: GuillaumeBAUD-coder/open-math-agents
+          ref: a63f0ff1f7a4016492a033a218e44e2a34eb2e37
+          path: catalog
+
+      - name: Read the catalog's pinned Lean project
+        id: pin
+        run: python3 -c 'import json; print("rev=" + json.load(open("catalog/data/catalog.json"))["meta"]["upstreamCommit"])' >> "$GITHUB_OUTPUT"
+
+      - name: Check out Formal Conjectures at that revision
+        uses: actions/checkout@v4
+        with:
+          repository: google-deepmind/formal-conjectures
+          ref: ${{ steps.pin.outputs.rev }}
+          path: formal-conjectures
+
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.elan
+            formal-conjectures/.lake
+          key: lts-lean-v1-${{ runner.os }}-${{ steps.pin.outputs.rev }}
+
+      - name: Install the pinned toolchain and Mathlib cache
+        working-directory: formal-conjectures
+        run: |
+          if [ ! -x "$HOME/.elan/bin/lake" ]; then
+            curl --fail --location --retry 3 --silent --show-error https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o "$RUNNER_TEMP/elan-init.sh"
+            sh "$RUNNER_TEMP/elan-init.sh" -y --default-toolchain none
+          fi
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+          "$HOME/.elan/bin/lake" exe cache get
+
+      - name: Compile every statement and audit every proof
+        env:
+          OMA_FC: ${{ github.workspace }}/formal-conjectures
+        run: |
+          cp lean/statements/*.lean catalog/statements/
+          cp lean/proofs/*.lean catalog/proofs/
+          mkdir -p "$RUNNER_TEMP/verdicts"
+          cd catalog
+          failed=0
+          for file in ../lean/statements/*.lean ../lean/proofs/*.lean; do
+            path="${file#../lean/}"
+            verdict="$RUNNER_TEMP/verdicts/${path//\//_}.json"
+            if tools/check.sh "$path" "$verdict"; then
+              python3 -c 'import json,sys; d=json.load(open(sys.argv[1])); print(d["reason"])' "$verdict"
+            else
+              cat "$verdict"
+              failed=1
+            fi
+          done
+          exit "$failed"
+
+      - name: Save individual kernel verdicts
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: lean-verdicts
+          path: ${{ runner.temp }}/verdicts
+          if-no-files-found: ignore
