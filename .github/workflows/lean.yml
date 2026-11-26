@@ -60,7 +60,7 @@ jobs:
           mkdir -p "$RUNNER_TEMP/verdicts"
           cd catalog
           failed=0
-          for file in ../lean/proofs/oeis-a354478.lean ../lean/proofs/oeis-a346644.lean; do
+          for file in ../lean/proofs/oeis-a379181.lean; do
             [ -f "$file" ] || continue
             path="${file#../lean/}"
             verdict="$RUNNER_TEMP/verdicts/${path//\//_}.json"
