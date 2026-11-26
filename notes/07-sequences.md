@@ -4,9 +4,31 @@
 
 Write the target as n = 2^a m, m odd, and set d = 2^a, B = 2^d − 1, L = m B. Choose an odd prime p ≡ −1 (mod 2m), which exists by Dirichlet's theorem, including when m=1. Set k = 2^(d−1) p^(L−1). Multiplicativity on coprime factors gives σ(k)/τ(k) = B(1+p+⋯+p^(L−1))/(dL) = (1+p+⋯+p^(L−1))/n. The numerator is odd since L is odd. Modulo m its L terms alternate 1,−1 and sum to 1, so its gcd with n is 1. This proves existence, hence the least k exists by well-ordering. It covers d=1, L=1 and n=1. A single power of two is insufficient: n=6 would give σ(2^5)/τ(2^5)=63/6=21/2. The second prime factor is what absorbs cancellation. Benoit Cloitre's entry dates to 2021. [Conjecture](https://oeis.org/A346644) · [companion denominator sequence](https://oeis.org/A057021) · [Dirichlet, MIT lecture 18, Theorem 18.1](https://ocw.mit.edu/courses/18-785-number-theory-i-fall-2021/mit18_785f21_full_lec.pdf).
 
+### A uniform witness with two prime powers
+
+Given any positive denominator $n$, take a prime $p>2$ with $p\equiv-1\pmod n$ and put $B=2^n-1$. The integer $k=2^{n-1}p^{B-1}$ has $nB$ divisors. Summing them as products of powers of 2 and $p$ gives
+$$
+\frac{\sigma(k)}{\tau(k)}=\frac{B(1+p+\cdots+p^{B-1})}{nB}.
+$$
+The remaining numerator is $1$ modulo $n$, since the $B$ summands alternate $1,-1$ modulo $n$ and $B$ is odd. Its reduced denominator is exactly $n$. Dirichlet's theorem supplies $p$ for every $n$, and $n=1$ gives $k=1$. This simpler construction proves existence directly. The earlier construction above can use much smaller exponents. [Machine-checked proof](../lean/proofs/oeis-a346644.lean)
+
 ## A354478 — The reciprocal signed Stirling sum tends to 1
 
 Let c(n,k)=|s(n,k)| and S(n)=Σ_{k=1}^n 1/s(n,k). Then c(n,n)=1 and c(n,n−1)=n(n−1)/2. For n≥4 and 1≤k<n, c(n,k)≥n(n−1)/2. The base row for n=4 is (6,11,6,1). For k≤n−2, the recurrence c(n,k)=(n−1)c(n−1,k)+c(n−1,k−1) and induction give at least (n−1) times binom(n−1,2), which is ≥binom(n,2) for n≥5. The remaining k=n−1 was given explicitly. Thus |S(n)−1| ≤ (n−1)/binom(n,2)=2/n for n≥4. The signed convention matters in the definition (S(2)=0), but the absolute tail estimate handles the signs. A second proof of the lower bound is log-concavity of the unsigned row (real-rooted rising factorial) and the endpoint values (n−1)! and binom(n,2). [Conjecture, V. Kotesovec](https://oeis.org/A354478) · [denominators](https://oeis.org/A354479) · [NIST DLMF §26.8, definitions and recurrence](https://dlmf.nist.gov/26.8).
+
+### Signed error at every fixed distance from the diagonal
+
+Write $c(n,k)=|s(n,k)|$ and $S_n=\sum_{k=1}^n 1/s(n,k)$. The Lean proof establishes the original limit with $|S_n-1|\le 2/n$ for $n\ge4$. The following written argument gives the sign and size of the first omitted term at every fixed order. For each fixed integer $r\ge0$,
+$$
+\lim_{n\to\infty} n^{2r+2}\left(S_n-\sum_{j=0}^r\frac{(-1)^j}{c(n,n-j)}\right)
+=(-1)^{r+1}2^{r+1}(r+1)!.
+$$
+
+For fixed $j\ge1$, a permutation on $n$ letters with $n-j$ cycles moves at most $2j$ letters. Indeed, every nontrivial cycle of length $h$ accounts for $h-1$ lost cycles. Equality requires $j$ disjoint transpositions, giving $(n)_{2j}/(2^j j!)$ permutations, where $(n)_k$ is the falling factorial. The remaining permutations choose at most $2j-1$ moved letters and arrange them in a bounded number of ways for fixed $j$. Consequently $c(n,n-j)\sim n^{2j}/(2^j j!)$.
+
+To justify summing the tail, fix $s=r+2$. The polynomial $x(x+1)\cdots(x+n-1)$ has coefficients $c(n,k)$ and only real roots. Newton's inequalities give log-concavity, so the smallest coefficient on $1\le k\le n-s$ occurs at an endpoint. Those endpoints are $(n-1)!$ and $c(n,n-s)\sim n^{2s}/(2^s s!)$. Each reciprocal in that interval is therefore $O_r(n^{-2s})$. Their total absolute value is $O_r(n^{1-2s})=O_r(n^{-2r-3})$. The single term $j=r+1$ now gives the stated limit.
+
+In particular, $n^2(1-S_n)\to2$ and $n^4(S_n-1+2/[n(n-1)])\to8$. These sharper limits have a written proof. The Lean file verifies the catalog's limit and its explicit $2/n$ error bound. [Lean proof](../lean/proofs/oeis-a354478.lean) · [Definitions and Stirling identities, DLMF §26.8](https://dlmf.nist.gov/26.8)
 
 ## A372239 — Both congruences for prime-indexed coefficients
 
