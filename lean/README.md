@@ -17,12 +17,12 @@ Ten original conjectures from the 83-entry collection have statement pull reques
 
 Each catalog statement has the one `sorry` required for a statement-only submission. Proof files must have none. For A056142, David Wasserman recorded the three-digit case in 2005. The Lean disproof uses 121 as a witness. The kernel reported only `propext`, `Classical.choice`, and `Quot.sound`. The proof can be submitted upstream once the statement merges. The manuscript separately proves the corrected classification at every greater word length.
 
-All ten statement PRs passed the upstream compiler and were open at this check. The [full verification run](https://github.com/seanm27lol/left-to-solve-research/actions/runs/45909016478) also accepted all ten statements and the complete A056142 disproof.
+All ten statement PRs passed the upstream compiler and were open at this check. The [full verification run](https://github.com/seanm27lol/left-to-solve-research/actions/runs/45909972551) also accepted all ten statements, the A056142 disproof, and the A047946 proof.
 
 For A047946, the [kernel verification](https://github.com/seanm27lol/left-to-solve-research/actions/runs/45909648650) accepted the complete recurrence for every positive step size and every nonnegative starting index. The proof derives a polynomial identity for the integer matrix advancing a consecutive Fibonacci pair. Cassini’s identity fixes the signs of the coefficients. See also [Birmajer, Gil and Weiner, *Integers* 16 (2016), A71](https://math.colgate.edu/~integers/q71/q71.pdf) for the general theory of subsequences of recurrences in arithmetic progression.
 
 The [repository verifier](../.github/workflows/lean.yml) runs the pinned upstream checker on the submitted statements and on candidate proofs against those statements. The upstream catalog still requires its own checker and maintainer review. The remaining entries can be found in the [research index](../INDEX.md).
 
-[Erdős 1131](https://github.com/seanm27lol/erdos-1131-lean) is a separate project. Its [asymptotic statement PR #21](https://github.com/GuillaumeBAUD-coder/open-math-agents/pull/21) is outside the 83-entry collection.
+[Erdős 1131](https://github.com/seanm27lol/erdos-1131-lean) is a separate project. Its [asymptotic statement PR #21](https://github.com/GuillaumeBAUD-coder/open-math-agents/pull/21) was still open for human review on 26 November 2026. It is outside the 83-entry collection. The [prepared disproof](https://github.com/seanm27lol/open-math-agents/blob/0947aa3953e525b4c218670e7723058735649a2a/proofs/erdos-1131.lean) passes the [catalog checker](https://github.com/seanm27lol/left-to-solve-research/actions/runs/45910534807) against the exact proposed statement on Lean 4.33.1. It refutes the proposed limit $n(2-M_n)\to1$ through an eventual lower bound of $106/105$. The exact minimum for each finite node count remains outside the result.
 
 [Catalog submission protocol](https://lefttosolve.com/join.txt)
