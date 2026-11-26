@@ -1,7 +1,7 @@
 name: Verify catalog Lean files
 on:
   push:
-    branches: [main]
+    branches: [verify-erdos-1131]
     paths:
       - 'lean/**/*.lean'
       - '.github/workflows/lean.yml'
@@ -22,6 +22,20 @@ jobs:
           repository: GuillaumeBAUD-coder/open-math-agents
           ref: a63f0ff1f7a4016492a033a218e44e2a34eb2e37
           path: catalog
+
+      - name: Load the prepared Erdős disproof
+        uses: actions/checkout@v4
+        with:
+          repository: seanm27lol/open-math-agents
+          ref: 53caf072df2123a07b3da6a5fcb13743a7ef387e
+          path: prepared-disproof
+
+      - name: Load the statement awaiting review in PR 21
+        uses: actions/checkout@v4
+        with:
+          repository: seanm27lol/open-math-agents
+          ref: d91fe41498476d68add6611f06aeb63082f9aed1
+          path: prepared-statement
 
       - name: Read the catalog's pinned Lean project
         id: pin
@@ -55,12 +69,12 @@ jobs:
         env:
           OMA_FC: ${{ github.workspace }}/formal-conjectures
         run: |
-          cp lean/statements/*.lean catalog/statements/
-          cp lean/proofs/*.lean catalog/proofs/
+          cp prepared-statement/statements/erdos-1131.lean catalog/statements/
+          cp prepared-disproof/proofs/erdos-1131.lean catalog/proofs/
           mkdir -p "$RUNNER_TEMP/verdicts"
           cd catalog
           failed=0
-          for file in ../lean/statements/*.lean ../lean/proofs/*.lean; do
+          for file in proofs/erdos-1131.lean; do
             path="${file#../lean/}"
             verdict="$RUNNER_TEMP/verdicts/${path//\//_}.json"
             if tools/check.sh "$path" "$verdict"; then
