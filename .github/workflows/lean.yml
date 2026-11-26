@@ -27,7 +27,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: seanm27lol/open-math-agents
-          ref: 53caf072df2123a07b3da6a5fcb13743a7ef387e
+          ref: 0947aa3953e525b4c218670e7723058735649a2a
           path: prepared-disproof
 
       - name: Load the statement awaiting review in PR 21
@@ -70,10 +70,9 @@ jobs:
           OMA_FC: ${{ github.workspace }}/formal-conjectures
         run: |
           cp prepared-statement/statements/erdos-1131.lean catalog/statements/
-          cp lean/proofs/erdos-1131.lean catalog/proofs/
+          cp prepared-disproof/proofs/erdos-1131.lean catalog/proofs/
           mkdir -p "$RUNNER_TEMP/verdicts"
           cd catalog
-          python3 -c 'from pathlib import Path; p=Path("tools/check.sh"); t=p.read_text().replace("log=sys.argv[4][-6000:]","log=sys.argv[4]"); p.write_text(t)'
           failed=0
           for file in proofs/erdos-1131.lean; do
             path="${file#../lean/}"
