@@ -70,9 +70,10 @@ jobs:
           OMA_FC: ${{ github.workspace }}/formal-conjectures
         run: |
           cp prepared-statement/statements/erdos-1131.lean catalog/statements/
-          cp prepared-disproof/proofs/erdos-1131.lean catalog/proofs/
+          cp lean/proofs/erdos-1131.lean catalog/proofs/
           mkdir -p "$RUNNER_TEMP/verdicts"
           cd catalog
+          python3 -c 'from pathlib import Path; p=Path("tools/check.sh"); t=p.read_text().replace("log=sys.argv[4][-6000:]","log=sys.argv[4]"); p.write_text(t)'
           failed=0
           for file in proofs/erdos-1131.lean; do
             path="${file#../lean/}"
