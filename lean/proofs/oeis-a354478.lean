@@ -43,11 +43,11 @@ private lemma interior (n k : ℕ) (hn : 4 ≤ n) (hk : 0 < k) (hkn : k < n) :
           Nat.mul_le_mul_right n (hsmall.trans prev)
         _ ≤ 2 * (n * n.stirlingFirst k + n.stirlingFirst (k - 1)) := by nlinarith
 
-private def summand (n j : ℕ) : ℝ := 1 / (signedStirling n (j + 1) : ℝ)
+private noncomputable def summand (n j : ℕ) : ℝ := 1 / (signedStirling n (j + 1) : ℝ)
 
 private lemma absSummand (n j : ℕ) :
     |summand n j| = 1 / (n.stirlingFirst (j + 1) : ℝ) := by
-  simp [summand, signedStirling, abs_div, abs_mul, abs_pow]
+  simp [summand, signedStirling, abs_mul, abs_pow]
 
 private lemma realRow (n : ℕ) :
     ((rowSum n : ℚ) : ℝ) = ∑ j ∈ range n, summand n j := by
@@ -81,7 +81,6 @@ private lemma errorBound (n : ℕ) (hn : 4 ≤ n) :
     _ = 2 / ((m + 1 : ℕ) : ℝ) := by
       simp only [sum_const, card_range, nsmul_eq_mul, Nat.cast_add, Nat.cast_one]
       field_simp
-      <;> ring
 
 theorem limit : type_of% @OMA.S_oeis_a354478.main := by
   simp only [← Rat.cast_def]
