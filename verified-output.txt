@@ -74,3 +74,23 @@ tree_domination.py
 
 chebyshev_search 1000000000000
 bound 1000000000000 prefixes 40103813 trials 4259311 hits 0
+
+chebyshev_completions.py 5 313
+factors=5 prefix_limit=313 prefixes=37820 hits=0
+
+chebyshev_completions.py 7 67 --audit
+independent signed systems=208 integral pairs=14
+reciprocal certificate holds through 1411 odd primes
+factors=7 prefix_limit=67 prefixes=4368 hits=0
+
+digit_range_mode.py
+Leading-digit identity verified exactly for lengths 1 through 10.
+A383307, lengths 2 through 10: [0, 30, 631, 8318, 84939, 762621, 6836799, 66714966, 698183347]
+A309417 telescoping and boundary errors checked on 11110 decimal blocks.
+
+paired_factorizations.py
+(4, 6), X=200000, qualified=4224, split exceptions=1968, two-prime-factor exceptions=3808
+(3, 7), X=200000, qualified=4106, split exceptions=7443, two-prime-factor exceptions=8451
+
+sequences_and_determinants.py (extended checks)
+Verified 330 inverse denominators and 35 local Smith profiles by exact minors.

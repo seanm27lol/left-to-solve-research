@@ -12,6 +12,20 @@ Proof manuscripts, literature references, computational checks, and Lean formali
 | [Digit mean equals mode](notes/02-entropy.md) | The proposed ratio of 10 fails. The asymptotic count is $C\lambda^n n^{-3/2}$, with $\lambda=9.82786850121986\ldots$. |
 | [Palindromic prefix concatenation](notes/03-pal-final.md) | Every word through length two works. At length three exactly the palindromes work. From length four onward exactly the constant words work. |
 
+## Latest results
+
+The [Lean tracker](lean/README.md) records five complete, kernel-checked results from this collection. The latest three establish every divisor-average denominator (A346644), prove the signed Stirling limit (A354478), and refute the proposed digit mean–mode ratio (A379181).
+
+| Written work added after the initial report | Result |
+|---|---|
+| [Stirling sums](notes/07-sequences.md#signed-error-at-every-fixed-distance-from-the-diagonal) | Signed error and leading constant at each fixed truncation order. |
+| [Digit subtraction](notes/06-own.md#a-rate-from-consecutive-decimal-blocks) and [digit range versus mode](notes/06-own.md#an-effective-error-bound-for-a383307) | Rates of convergence for both proposed ratios. |
+| [The two factorization problems](notes/06-own.md#exact-exceptional-integers-and-the-common-leading-deficit) | Exact classification of exceptional integers and their common leading counting constant. |
+| [Hankel matrices](notes/06-own.md#local-smith-factors-and-denominators-of-every-inverse-entry) | Local Smith exponents and the exact reduced denominator of each inverse entry. |
+| [Chebyshev primality](notes/17-chebyshev.md#a-congruence-obstruction-for-the-number-of-prime-factors) | Restrictions on the prime factors of a composite and exhaustive completions for 42,188 prefixes. The full conjecture remains open. |
+
+The downloadable reports preserve the initial research collection.
+
 ## Coverage
 
 | Treatment | Entries |
@@ -25,7 +39,7 @@ The index counts catalog entries. One proof can cover several entries. A written
 
 ## Reproduce the checks
 
-Use Python 3.11 or later. The spectral checks require NumPy and SciPy. The two-prime almost-perfect sieve uses SymPy. All other Python scripts use the standard library. From the repository root, run the checks you want to reproduce.
+Use Python 3.11 or later. The spectral checks require NumPy and SciPy. The almost-perfect sieve, Chebyshev completion search, and paired-factorization check use SymPy. All other Python scripts use the standard library. From the repository root, run the checks you want to reproduce.
 
     python checks/digit_growth.py
     python checks/sequences_and_determinants.py
@@ -33,12 +47,17 @@ Use Python 3.11 or later. The spectral checks require NumPy and SciPy. The two-p
     python checks/eigenvalue_bounds.py
     python checks/almost_perfect_numbers.py 11
 
-Run each other checks/*.py file with Python without arguments. The final C++17 exhaustive search can be reproduced with:
+Run the Chebyshev completion search with the number of prime factors and the largest permitted prefix prime.
+
+    python checks/chebyshev_completions.py 5 313
+    python checks/chebyshev_completions.py 7 67 --audit
+
+The remaining Python checks take no arguments. The final C++17 exhaustive search can be reproduced with:
 
     c++ -O3 -std=c++17 checks/chebyshev_search.cpp -o chebyshev_search
     ./chebyshev_search 1000000000000
 
-[Recorded outputs of the 13 verification programs](verified-output.txt) · [Machine-readable problem index](index.csv)
+[Recorded verification outputs](verified-output.txt) · [Machine-readable problem index](index.csv)
 
 ## Reuse and attribution
 

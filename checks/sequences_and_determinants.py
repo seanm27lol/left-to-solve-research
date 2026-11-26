@@ -1,6 +1,6 @@
 """Independent finite checks of four analytic and algebraic arguments. Python 3, standard library."""
 from fractions import Fraction
-from itertools import permutations, product
+from itertools import combinations, permutations, product
 from math import comb, factorial, isqrt, prod
 
 def determinant(rows):
@@ -61,3 +61,40 @@ for n in range(1,15):
         expected=n<=2 or (n==3 and word==word[::-1]) or len(set(word))==1
         assert (joined==joined[::-1])==expected
 print('45 exact Hankel determinants, 40 permanents, 2 continued-fraction recurrences, and every binary word through length 14 passed.')
+
+
+def valuation(value, p):
+    value = abs(value)
+    assert value > 0
+    exponent = 0
+    while value % p == 0:
+        value //= p
+        exponent += 1
+    return exponent
+
+
+entry_checks = profiles = 0
+for offset, step in [(2, 1), (1, 2), (2, 3), (3, 4), (5, 6), (7, 10)]:
+    prime_factors = [p for p in (2, 3, 5) if step % p == 0]
+    for size in range(1, 6):
+        indices = range(size)
+        matrix = [[Fraction(1, offset + step * (i + j)) for j in indices] for i in indices]
+        det = determinant(matrix)
+        for i, j in product(indices, repeat=2):
+            cofactor = [[matrix[r][c] for c in indices if c != i] for r in indices if r != j]
+            inverse_entry = (-1)**(i+j) * determinant(cofactor) / det
+            b = prod(factorial(k) * factorial(size-1-k) for k in (i, j))
+            denominator = step**(2*size-2) * prod(p**valuation(b, p) for p in prime_factors)
+            assert inverse_entry.denominator == denominator
+            entry_checks += 1
+        for p in prime_factors:
+            previous = 0
+            for k in range(1, size+1):
+                subsets = list(combinations(indices, k))
+                minors = [determinant([[matrix[r][c] for c in cols] for r in rows])
+                          for rows, cols in product(subsets, repeat=2)]
+                minimum = min(valuation(x.numerator, p) - valuation(x.denominator, p) for x in minors)
+                assert minimum - previous == 2*(k-1)*valuation(step, p) + 2*valuation(factorial(k-1), p)
+                previous = minimum
+            profiles += 1
+print(f"Verified {entry_checks} inverse denominators and {profiles} local Smith profiles by exact minors.")
