@@ -9,7 +9,7 @@ Proof manuscripts, literature references, computational checks, and Lean formali
 | Problem | Result in the manuscript |
 |---|---|
 | [Trimmed eigenvalue sums](notes/01-projection.md) | A variational argument proves the proposed inequality for every nonempty block of eigenvalues of a real positive semidefinite matrix minus a multiple of its diagonal. |
-| [Digit mean equals mode](notes/02-entropy.md) | The proposed ratio of 10 fails. The asymptotic count is $C\\lambda^n n^{-3/2}$, with $\\lambda=9.82786850121986\\ldots$. |
+| [Digit mean equals mode](notes/02-entropy.md) | The proposed ratio of 10 fails. The asymptotic count is $C\lambda^n n^{-3/2}$, with $\lambda=9.82786850121986\ldots$. |
 | [Palindromic prefix concatenation](notes/03-pal-final.md) | Every word through length two works. At length three exactly the palindromes work. From length four onward exactly the constant words work. |
 
 ## Coverage
