@@ -1,0 +1,79 @@
+Shared-factor square restrictions
+================================
+
+Hypotheses: d<e<a<b<c are odd primes, v=a-e, n=deabc,
+Q=dbc, M=d(b+c)-bc, Y=ea, MY=vQ+1,
+and L=lcm(b-1,c-1) divides n-1.
+
+Set H=gcd(M,L), G=gcd(M,b-1,c-1).
+
+1. M is odd. Since MY-vQ=1, gcd(M,Q)=gcd(M,v)=1.
+   The exact identity (Y+v)Q=(n-1)+MY gives H | Y+v.
+   Thus (2e+v)^2 = v^2+4Y is congruent to v(v-4) modulo H.
+   This statement holds modulo the entire H, not just its radical.
+   Also H divides v*d^2-d+1. To see this, first work modulo
+   Hb=gcd(M,b-1): b=1, d+(d-1)c=0 and vdc+1=0.
+   Multiplying the last equation by d-1 and substituting (d-1)c=-d
+   proves vd^2-d+1=0. The proof modulo Hc=gcd(M,c-1) is identical.
+   Since H=lcm(Hb,Hc), the assertion holds modulo the entire H.
+   This gcd/lcm identity follows prime by prime: if the three valuations
+   are m=ord_ell(M), b=ord_ell(b-1), c=ord_ell(c-1), then both sides have
+   valuation min(m,max(b,c))=max(min(m,b),min(m,c)). This includes all
+   overlaps and makes no coprimality assumption.
+   Thus (2vd-1)^2=1-4v (mod H), as well as the preceding square.
+
+   In particular, for any ell^h dividing H, ell does not divide v.
+   If 0<ord_ell(v-4)<h, this valuation must be even. If ell does not
+   divide v(v-4), the Legendre residue at ell must be +1.
+
+   Both square tests modulo 3 force v=1 (mod 3). Writing v=1+3q,
+   the first discriminant is -3(1+4q) and the second is
+   3(1+3q)(q-1). If 9 divided H, squarehood modulo 9 would force
+   q=2 and q=1 modulo 3 simultaneously. Hence 9 does not divide H.
+
+   Both tests modulo 5 force v=4 (mod 5). Writing v=4+5q,
+   the discriminants are -5(3+4q) and 5q(4+5q). If 25 divided H,
+   squarehood would force q=3 and q=0 modulo 5 simultaneously.
+   Hence 25 does not divide H. Also 7|H forces v=1 (mod 7).
+
+2. Modulo G, b=c=1, Q=d and M=2d-1=0. Since G is odd,
+   2 is invertible. Multiplying vQ+1=0 by 2 gives v+2=0.
+   Also YQ=n=1, so Y=2. Therefore
+       G | v+2, and (e-1)^2=3 (mod G).
+   Consequently 9 does not divide G. Every prime ell|G other than 3
+   is 1 or 11 modulo 12. No nonunit was cancelled: only 2 or Q were
+   inverted, and their coprimality was established beforehand.
+
+The lemma rules out every configuration violating either full prime-power
+quadratic-residue test. It does not imply that M is coprime to L and does
+not permit replacing the full required product ML by lcm(M,L).
+
+
+Two top forbidden shifts in the (K,L,z)=(7,10,23) family
+======================================================
+
+Let positive even g have integral
+  X=(1610g^3-9409g^2-1167g+9)/9,
+  Z=(391g^2-2334g+9)/9,
+and put b=7g+1, c=10g+1, n=bcX.
+Then both b+1 and c+1 fail to divide n-1, independently of whether X
+factors into the required three primes.
+
+Proof. Set P(g)=9(n-1). Exact expansion gives
+  P(g)=112700g^5-631260g^4-240033g^3-28618g^2-1014g.
+The rational evaluations are
+  P(-2/7)=-298148/343, P(-1/5)=-8467/125.
+For b+1=7g+2, multiply by 7^5 and reduce. If b+1|n-1,
+then b+1 divides 298148*49; gcd(b+1,7)=1 gives b+1|298148.
+Since 298148=4*19*3923, complete divisor enumeration yields only
+g=21296 among positive even g. At that g the numerator of Z is 1
+modulo 9, contrary to integrality.
+
+For c+1=2(5g+1), if it divides n-1 then 5g+1 does as well.
+Multiply P by 5^5 and reduce modulo 5g+1 to obtain 5g+1|8467;
+the cancelled powers of 5 are units. The number 8467 is prime and
+(8467-1)/5 is not an integer, so no positive integer g works.
+
+This shows that the two top forbidden divisibilities cannot be used to
+discard this entire family. It is not a counterexample to the Chebyshev
+claim, because the three lower prime factors and their local tests remain.

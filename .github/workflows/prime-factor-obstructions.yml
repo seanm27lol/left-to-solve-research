@@ -1,0 +1,37 @@
+name: Verify prime-factor obstructions
+on:
+  pull_request:
+    paths:
+      - 'checks/almost_perfect_component_norm.py'
+      - 'checks/almost_perfect_mersenne*.py'
+      - 'checks/chebyshev_even_factor_count.py'
+      - 'checks/chebyshev_middle_gap_500.cpp'
+      - 'checks/chebyshev_middle_product.py'
+      - 'checks/chebyshev_negative_overlap.py'
+      - '.github/workflows/prime-factor-obstructions.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  identities-and-factor-counts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install sympy==1.14.0
+      - run: |
+          python checks/almost_perfect_mersenne.py
+          python checks/almost_perfect_mersenne_low.py
+          python checks/almost_perfect_component_norm.py
+          python checks/chebyshev_even_factor_count.py
+          python checks/chebyshev_middle_product.py
+          python checks/chebyshev_negative_overlap.py
+  middle-gap:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          g++ -std=c++17 -O3 checks/chebyshev_middle_gap_500.cpp -o /tmp/chebyshev-middle-gap
+          /tmp/chebyshev-middle-gap
