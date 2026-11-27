@@ -1,0 +1,136 @@
+CHEBYSHEV ENDPOINT DEFICIT: AN UNBOUNDED-PARAMETER EXCLUSION
+
+Hypotheses. Let 7 <= d < e < a < b < c < 2d be distinct primes,
+n=deabc, and assume the signed reciprocal identity together with the
+required shifts d+1,c-1 dividing n-1. Write k=2d-c, X=eab, and
+G=gcd(d+1,c-1)=gcd(d+1,k+3). For the assertion k!=1, also assume the
+forbidden shift d-1 does not divide n-1.
+
+THEOREM. Put T=k^2(k+1)^2(k+2)^2. Every candidate has
+
+  d < k + G [2T+6k^2+12k+4],       G | k+3.
+
+Together with the exact finite certificate described below, every full
+candidate satisfies k>=9. In particular, the endpoint deficit 2d-c must
+tend to infinity at least as a constant times d^(1/7). If G is bounded,
+the exponent improves to 1/6. The middle gap v=a-e is unrestricted.
+These statements do not settle the full interval c<2d.
+
+1. Local cofactor equations, with no cancellation of a shared factor.
+The signed identity gives cX=-1 (mod d) and dX=1 (mod c). The required
+shifts give the same respective congruences modulo d+1 and c-1. Hence
+
+  cX=-1 (mod d(d+1)),    dX=1 (mod c(c-1)).
+
+In particular,
+
+  d | kX-1,
+  d+1 | (k+2)X-1,
+  c | kX-2,
+  c-1 | (k+1)X-2.
+
+The final two follow by multiplication by 2, since 2d=c+k.
+No inverse of k or k+1 is taken here.
+
+2. The interpolation polynomial.
+Let C=24k^2+48k+16 and
+
+ P(x)=-C x^3+(12k^3+8k^2-24k-8)x^2
+      +(2k^4+20k^3+42k^2+28k+8)x+k(k+1)^2(k+2)^2.
+
+Let L(x)=P(x)/T. Its values at x=0,-1,k/2,(k+1)/2 are respectively
+1/k,1/(k+2),2/k,2/(k+1). These are polynomial identities after clearing
+the indicated denominators. Also P(x) is a polynomial in 2x with integer
+coefficients: the cubic coefficient is divisible by 8, the quadratic by
+4, and the linear by 2.
+
+Set F=T X-P(d). The four divisibilities in step 1 now imply respectively
+
+  d|F, d+1|F, c|F, c-1|F.
+
+For example, write P(d)=Ptilde(2d), reduce modulo c or c-1, and use
+Ptilde(k)=2T/k or Ptilde(k+1)=2T/(k+1). All displayed quotients T/k,
+T/(k+1),T/(k+2) are integers. Thus this argument does not cancel a
+nonunit modulo an even shift.
+
+Among d,d+1,c,c-1 only the two shifts can share a prime. Indeed d,c are
+distinct primes, d+1<c, and d<c-1<2d, so gcd(d,c-1)=1. Consequently
+
+ lcm(d,d+1,c,c-1) = d(d+1)c(c-1)/G.
+
+It follows that
+
+  G T [X-L(d)]/[d(d+1)c(c-1)]
+
+is an integer. The factor G is essential and has been retained.
+
+3. Positivity, including the possible zero remainder.
+For k>=3 and x>=k one has
+
+  0 < -L(x) < (C/T)x^3.
+
+For the upper bound, the three non-leading coefficients of P are positive.
+For the lower bound put x=k+z, z>=0. The coefficients of -P(k+z), in
+descending powers of z, are
+
+ C,
+ 60k^3+136k^2+72k+8,
+ 46k^4+108k^3+54k^2-12k-8,
+ k(9k^4+14k^3-15k^2-32k-12).
+
+They are positive for k>=3; alternatively the exact verifier expands
+k=3+w and verifies nonnegative coefficients and positive constants.
+Since X>0, the integer in step 2 is strictly positive. In particular
+there is no zero-remainder exception.
+
+4. The bound.
+Since X=eab<8d^3, step 3 gives
+
+ d(d+1)c(c-1) <= G T[X-L(d)] < G(8T+C)d^3.
+
+Also (d+1)(c-1)>dc, since c-d-1>0. Therefore
+
+ (2d-k)^2 = c^2 < G(8T+C)d.
+
+Expanding and discarding the positive k^2 gives
+
+ d < k + G(8T+C)/4 = k + G[2T+6k^2+12k+4].
+
+Finally G=gcd(d+1,k+3), so G<=k+3. These inequalities hold for unbounded
+k and v. If k=1, then c-1=2(d-1), so the required c-1 divisibility would
+force the forbidden d-1 divisibility. Thus k>=3.
+
+5. Complete finite reductions for k=3,5,7.
+For each such k, the preceding theorem gives the finite range
+
+ d <= k+(k+3)[2k^2(k+1)^2(k+2)^2+6k^2+12k+4]-1.
+
+The resulting maximum d values are 43,766; 707,316; and 5,084,146.
+For each prime d>k with c=2d-k prime, retain the sharper actual-G bound.
+The two cofactor congruences in step 1 determine all possible X by the
+generalized CRT, whose period is d(d+1)c(c-1)/G. Enumerate all its
+representatives d^3<X<c^3. This interval includes every eab. Exact
+trial division then tests whether X is three distinct primes in (d,c).
+
+The complete results are:
+ k=3: 877 endpoint pairs, 3 cofactor representatives, zero eligible triples.
+ k=5: 4249 endpoint pairs, 2 cofactor representatives, zero eligible triples.
+ k=7: 18717 endpoint pairs, 2 cofactor representatives, zero eligible triples.
+
+All seven cofactor representatives (d,c,X) are
+ (13,23,8641), (23,43,55829), (521,1039,148201229),
+ (11,17,2275), (47,89,530743),
+ (43,79,226561), (14629,29251,3153054217219).
+
+The first, second and fifth X values are prime. The remaining values
+have, respectively, a factor 11<521; a factor 5<11; factorization
+71*3191 with 3191>79; and a factor 193<14629. Thus none can be eab.
+The certificate uses an ordinary Eratosthenes sieve and exact integer
+CRT and trial division. It does not assume the conjecture, use probable
+prime tests, or impose a numerical cutoff on v.
+
+Run:
+ python3 verify_chebyshev_endpoint_deficit.py
+
+This proves k>=9 at every prime size, while leaving configurations with
+k>=9 and d below the displayed polynomial bound unexcluded.

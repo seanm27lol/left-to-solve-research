@@ -1,0 +1,208 @@
+A top-shift overlap theorem for unbounded middle gap
+==================================================
+
+Hypotheses. Let 7 <= d < e < a < b < c < 2d be distinct odd primes,
+let n=deabc, assume
+  1/a+1/b+1/c-1/d-1/e = 1/n,
+and b-1,c-1 divide n-1. Also assume v=a-e >=502, as supplied by
+notes/chebyshev-joint-shifts.md at revision
+a6257364d627cf93ab55c836dea48bce831a587b.
+No other required or forbidden shift is used in the theorem below.
+
+THEOREM. Set g=gcd(b-1,c-1). Then
+  g <= (b-1)/9,
+unless all of the following hold:
+  b=7g+1, c=10g+1,
+  g = 48,138,426, or516 (mod630),
+  X=dea=(1610g^3-9409g^2-1167g+9)/9,
+  Z=a(d+e)-de=(391g^2-2334g+9)/9.
+In particular g <= (b-1)/7 unconditionally under these hypotheses.
+
+This is a proof for every size of g and v. The finite computation below
+checks a fixed list of polynomial identities and residue classes; it does
+not impose a cutoff on any prime or on v.
+
+1. A preliminary interval inequality
+-------------------------------------
+We have 3b-2c >=3. Indeed, a<=b-2 and d,e>c/2 imply that the signed
+reciprocal sum exceeds
+  2/b -3/c +2/b^2.
+If 3b-2c<=1, this exceeds -1/(bc)+2/b^2 >1/b^2 >1/n, a contradiction.
+The integer 3b-2c is odd, so it is at least3.
+
+Write b=Kg+1,c=Lg+1. Then g is even, gcd(K,L)=1, and
+  K<L<3K/2.
+Also, d >=(c+1)/2, e>=d+2, a<=b-2 give
+  v <= (2K-L)g/2 -4.
+Therefore (2K-L)g>=1012, and g is at least the least even integer satisfying
+that inequality.
+
+2. A positive integral top-pair parameter
+------------------------------------------
+Let X=dea, Z=a(d+e)-de, and delta=(L-K)^2. The signed equation is
+  X(b+c)-Zbc=1.                                           (1)
+The top congruences imply g|(X-1), b|(cX-1), c|(bX-1).
+Put
+  R=delta-KL(K+L)g-2K^2L^2g^2.
+Then
+  delta X-R = z g b c                                    (2)
+for a positive integer z.
+
+There is no cancellation of L-K or delta in this assertion. Modulo b,
+Kc-Lb=K-L gives (L-K)X=-K, hence delta X=-K(L-K).
+Reducing R with Kg=-1 gives the same residue. The corresponding residues
+modulo c are L(L-K). Modulo g both delta X and R equal delta. The three
+moduli g,b,c are pairwise coprime: b,c are distinct primes and each is1
+modulo g. Hence their full product divides delta X-R. Finally R<0, so z>0.
+
+Substitution into (1) gives the second exact identity
+  delta Z = z g(b+c)+delta-2KL(K+L)g.                     (3)
+The two full top shifts give, without cancelling delta,
+  K | z c^2 +delta L,   L | z b^2 +delta K.               (4)
+For example, multiply cX-1 by delta, substitute (2), divide the resulting
+integer polynomial by g, and reduce modulo K. Because Kg divides cX-1,
+this is legitimate even if K and g or K and delta share factors. Also
+  gcd(c,K)=gcd(b,L)=1,
+because the primes b,c exceed K,L.
+
+3. Exact lower and upper envelopes for X
+-----------------------------------------
+The following two strict bounds depend only on ordering and (1):
+  (bc^3-4)/(4(3b-c)) < X < (b^2c^2+2)/(2(2c-b)).          (5)
+Here all denominators are positive.
+
+For a directly checkable proof, set T=bc and S=(b+c)/(bc).
+Solving (1) for a shows
+  X=f(d,e)=de(de-1/T)/(d+e-Sde).
+The denominator is positive at the original (d,e). On the rectangle
+[c/2,d] x [c/2,e] it remains positive, since it decreases in each variable
+and S*c/2>1. Its derivative in the first variable is
+  e^2 [d^2(1-Se)+2de-1/T]/(d+e-Sde)^2.
+Because both variables lie in [c/2,b), Se<2 and
+  d(2e-d) >= d(c-d) > d(c-b) > 1/T,
+this derivative is positive; the other derivative is positive by symmetry.
+Evaluating at d=e=c/2 proves the lower bound in (5).
+
+For the upper bound solve (1) for e instead:
+  X=f2(a,d)=ad(ad+1/T)/(Sad+d-a).
+Since Sd>1, this is strictly increasing in a. Increase a to b. For the
+associated e(a,d)=(ad+1/T)/(Sad+d-a), its a-derivative is
+  [d^2-(Sd-1)/T]/(Sad+d-a)^2 >0,
+so the resulting e remains greater than d. With a=b fixed, decreasing d
+toward c/2 increases e, because
+  de/dd = -[b^2+(Sb+1)/T]/(Sbd+d-b)^2 <0.
+Throughout that segment e>d, and this is exactly the condition that
+  df2/dd = b^2[d^2(Sb+1)-2bd-1/T]/(Sbd+d-b)^2
+be negative. The denominator is positive even at d=c/2, where it is c-b/2.
+Thus f2(b,c/2)>X; its value is the upper expression in (5).
+
+4. The finite index cover, uniform for all g
+--------------------------------------------
+If K<=8, K<L<3K/2 and gcd(K,L)=1 leave exactly these ten rows.
+The lower bound on g comes from (2K-L)g>=1012 and evenness.
+Substituting (5) into (2) gives the following convenient uniform bounds.
+Put H=2L-K and delta=(L-K)^2. Then
+  delta L^2/[4(3K-L)] < z
+    < delta KL/(2H)
+       +[2KL+delta(2L^2-K^2)/(2H^2)]/g +delta/(Hg^2).      (6)
+The upper bound decreases as g grows. Here is an algebraic verification.
+Writing E=-delta+KL(K+L)g+2K^2L^2g^2, equation (2) reads
+  z=(delta X+E)/(gbc).
+We have E>delta and E/(gbc)<2KL/g. In the lower envelope for X, the
+negative correction is delta/[gbc(3b-c)], which is smaller than E/(gbc).
+Also
+  (3K-L)c^2-L^2g(3b-c)
+    =2L(3K-2L)g+3K-L>0.
+This proves the lower half of (6). For the upper half, polynomial division
+and positive denominators give
+  bc/[2g(Hg+1)]
+    < KL/(2H)+(2L^2-K^2)/(2H^2g)+1/(2Hg^2).
+The remaining term 1/[gbc(Hg+1)] is less than1/(2Hg^2), since bc>2.
+Together with E/(gbc)<2KL/g, this proves (6).
+
+Substituting g_min into the decreasing upper bound, and using the constant
+lower bound, gives the listed strict interval for integer z.
+
+ K   L    g_min       interval for z           survivors of (4)
+ 3   4     506           0<z<2                    none
+ 4   5     338           0<z<2                    none
+ 5   6     254           1<z<3                    none
+ 5   7     338           6<z<8                    none
+ 6   7     204           0<z<5                    none
+ 7   8     170           1<z<4                    none
+ 7   9     204           6<z<13                   none
+ 7  10     254          20<z<25           z=23; g=6,26,48,68 mod70
+ 8   9     146           1<z<5                    none
+ 8  11     204          20<z<30                   none
+
+All ten rational comparisons in (6) are exact and are checked by the
+standard-library verifier. For example the tightest upper comparison,
+K=5,L=7,g_min=338, is 18484891/2313441<8.
+The residue exclusions can be checked individually as follows.
+* (3,4): z=1 would require c^2=-1 mod3.
+* (4,5): z=1 would require c^2=-1 mod4.
+* (5,6): z=2 contradicts the L-test modulo3.
+* (5,7): z=7 contradicts the L-test modulo7.
+* (6,7): the K-test requires z=5 mod6, outside1,...,4.
+* (7,8): the L-test requires z=1 mod8, outside2,3.
+* (7,9): the L-test permits only z=8 or11 in7,...,12. Both are quadratic
+  residues modulo7, whereas the K-test requires z*c^2=-1 mod7.
+* (7,10): the L-test leaves z=23. The K- and L-tests then give the four
+  residues g=6,26,48,68 mod70.
+* (8,9): the K-test requires z=7 mod8, outside2,...,4.
+* (8,11): the K-test leaves z=21 or29. The L-test would require b^2=6 or7
+  modulo11, respectively; neither is a quadratic residue.
+In these uses b and c are units for the relevant modulus, as established
+following (4).
+
+An independent polynomial certificate verifies the same interval bounds
+without using the estimates in (6). For its row, put
+E=-delta+KL(K+L)g+2K^2L^2g^2 and b=Kg+1,c=Lg+1.
+If the interval is lo<z<hi, define
+  P_upper=2 hi g b c(2c-b)-delta(b^2c^2+2)-2(2c-b)E,
+  P_lower=delta(bc^3-4)+4(3b-c)E-4 lo g b c(3b-c).
+For each row, substitute g=g_min+x. Every coefficient of each polynomial
+is nonnegative and its constant term is positive. Thus both polynomial
+inequalities hold for every real x>=0. The accompanying standard-library
+verifier constructs these polynomials and checks every coefficient.
+It also enumerates all even residues g modulo lcm(2,K,L) for (4), imposing
+gcd(c,K)=gcd(b,L)=1. This exhausts the residue question at unbounded g.
+
+5. The surviving one-parameter family
+---------------------------------------
+For K=7,L=10,z=23, equations (2)-(3) become the X,Z polynomials in the
+statement. Integrality of Z forces 3|g. Writing g=3t gives
+  X=4830t^3-9409t^2-389t+1,
+  Z=391t^2-778t+1.
+Then g|(X-1) holds exactly when t=1 mod3, or g=3 mod9.
+Combining this with g=6,26,48,68 mod70 gives exactly
+  g=48,138,426,516 mod630.
+Conversely these progressions make X,Z integral and satisfy (1) and both
+full top cofactor congruences
+  cX=1 mod b(b-1),   bX=1 mod c(c-1).
+This last sufficiency is a statement about the two top tests only.
+The verifier proves it symbolically by dividing the corresponding
+polynomials in t for g=g0+630t, obtaining integer polynomial quotients.
+
+An explicit top-pair near miss has
+  g=1776, b=12433, c=17761,
+  X=998804996977, Z=136570849.
+Here b,c and X are prime by exact trial division. The pair identity and
+both top cofactor congruences hold exactly. Since X is itself prime, it
+cannot equal a product dea of three distinct primes; this is NOT a
+counterexample to the claim. It demonstrates that the top restrictions,
+even with these precise invariants, do not by themselves give a contradiction.
+
+6. Remaining work and limitations
+-----------------------------------
+The theorem leaves (i) K>=9 and (ii) the displayed K=7,L=10 family.
+A full solution would have to rule out a factorization X=dea with the
+ordering, invariant Z=a(d+e)-de, and the remaining required/forbidden
+shifts in those configurations. No bound on unbounded v, or proof that
+these configurations are empty, has been obtained here.
+
+The proof did not replace M*lcm(b-1,c-1) by separate divisibility tests.
+Instead it used the exact original signed equation and original top
+cofactor congruences. All product-divisibility steps explicitly used
+pairwise coprimality of g,b,c, which is valid under the prime hypotheses.
+No assumption about gcd(M,lcm(b-1,c-1)) was made.

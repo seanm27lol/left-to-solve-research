@@ -1,0 +1,74 @@
+ZERO-REMAINDER AND FULL-MODULUS AUDIT
+===================================
+
+1. The full top modulus
+----------------------
+With the user's Q=dbc, M=d(b+c)-bc, Y=ea and v=a-e, the signed identity is
+MY=vQ+1. It gives gcd(M,Q)=gcd(M,v)=1. If Y is integral, then exactly
+  vQ^2+Q-M = M(n-1).
+Thus M*lcm(b-1,c-1) divides the left side if and only if both top shifts divide
+n-1. This is division of an integer identity by the nonzero integer M, not an
+assumption that M is relatively prime to the least common multiple. The proofs
+in this bundle do not replace that product by separate tests modulo its factors.
+
+2. The two suggested evaluation remainders
+-----------------------------------------
+Let j=2d-b, k=2d-c, h=j-k, u=(j+1)/2, w=(k+1)/2. Substituting d=u and d=w
+in vQ^2+Q-M gives exactly
+  A=v u^2(h+1)^2+h+1-u,
+  B=v w^2(h-1)^2-(h-1)-w.
+Since (b-1)/2=d-u and (c-1)/2=d-w, the suggested divisibilities follow by
+ordinary integer polynomial reduction.
+
+Both remainders are positive throughout the surviving range. The first is
+positive already for v>=2, u>=2, h>=2. For the second put z=h-1>=1. Then
+  B>=2w^2z^2-z-w.
+The last expression is zero only when w=z=1 and is strictly increasing when
+either positive integer w or z increases. Thus B=0 is possible only at
+  v=2, w=1, h=2, i.e. v=2,k=1,j=3.
+This case is excluded both by v>=502 and by the forbidden shift at d when k=1.
+No zero remainder remains in this two-evaluation route.
+
+3. The fixed-gap auxiliary divisor is never zero
+------------------------------------------------
+The pinned finite reduction uses
+  E0=v[jk(j-k)]^2-(j+k)^3.
+For any positive integers v,j>k this is nonzero. If it were zero, write
+j=t j',k=t k' with gcd(j',k')=1 and divide by t^3 to get
+  (j'+k')^3 = v t^3(j'k')^2(j'-k')^2.
+A prime divisor of j'k' cannot divide j'+k', so j'k'=1. Then j'=k'=1,
+contradicting j>k. This proof does not divide by j'-k' or any nonunit modulus.
+
+4. The all-five-shift cubic remainder is strictly negative
+---------------------------------------------------------
+Let signed coordinates be (-d,-e,a,b,c), with elementary symmetric sums E_i.
+The signed equation gives E4=1 and E5=n. Put
+  R=(d+1)(e+1)(a-1)(b-1)(c-1),
+  C=E3-E2+E1-1.
+Then R=n-1+C. The full required least common multiple divides C.
+
+To prove C<0 without asymptotics, put
+  u=(b-d-1)/(db)>0, w=(a-e-1)/(ea)>0,
+  delta=1/(db)+1/(ea)+1/n.
+The signed reciprocal identity gives 1/c=u+w+delta, and
+  R/n=(1+u)(1+w)(1-u-w-delta).
+Direct expansion gives
+  (n-R)/n=u^2+uw+w^2+uw(u+w)+delta(1+u+w+uw)>1/n.
+Hence R<n-1 and C<0. No C=0 branch is omitted.
+
+One uniform consequence is lcm(d+1,e+1,a-1,b-1,c-1)<20d^3.
+Indeed -E3=(n*sum_p 1/p^2-1/n)/2. The five summands n/p^2 are bounded,
+respectively, by 16d^3,8d^3,4d^3,4d^3,4d^3, so -E3<18d^3.
+Also E1=a+b+c-d-e>1 and E2<ab+ac+bc+de<14d^2. Thus
+  0<-C=-E3+E2-E1+1<18d^3+14d^2<=20d^3  (d>=7).
+Since R>d^5, the overlap factor R/lcm(required shifts) exceeds d^2/20.
+This is an additional unbounded-family exclusion, not a contradiction: large
+overlaps among different required shifts are not uniformly ruled out.
+
+5. Remainders actually used in the new theorems
+----------------------------------------------
+The top-index integer z is positive because its interpolation remainder R0 is
+strictly negative and X>0. The endpoint integer is positive because X>0 and the
+interpolant L(d)<0. The two exceptional forbidden-shift evaluations are the
+nonzero rationals -298148/343 and -8467/125. Their only cancelled powers, of7
+and5, are units modulo7g+2 and5g+1 respectively. Details appear in the proofs.
