@@ -6,6 +6,7 @@ here.  Every dual inequality is checked below with Fraction arithmetic.
 
 from fractions import Fraction
 from itertools import combinations, product
+from math import isqrt
 
 
 TYPES = tuple(range(2, 9))
@@ -100,6 +101,113 @@ def linear_rows(hist, gaps):
     return rows, right, cost
 
 
+def balanced_root_certificate():
+    """Check the scalar classification for the balanced 10+10 root.
+
+    A coordinate with z(z-1) <= 4 lies in {-1,0,1,2}.  We enumerate the
+    multiplicities of these four values in each ten-element part.  The
+    minimum-degree test is necessary because every occupied coordinate must
+    have at least four possible opposite-part neighbors whose edge sum is
+    zero or one.
+    """
+    parts = []
+    for minus_one in range(3):
+        for two in range(3):
+            if minus_one + two > 2:
+                continue
+            for one in range(11 - minus_one - two):
+                zero = 10 - minus_one - one - two
+                counts = {-1: minus_one, 0: zero, 1: one, 2: two}
+                total = -minus_one + one + 2 * two
+                B = 2 * (minus_one + two)
+                parts.append((total, B, counts))
+
+    def degree_possible(left, right):
+        return (
+            all(sum(right[y] for y in right if x + y in (0, 1)) >= 4
+                for x in left if left[x])
+            and all(sum(left[x] for x in left if x + y in (0, 1)) >= 4
+                    for y in right if right[y])
+        )
+
+    records = set()
+    for sum_left, B_left, left in parts:
+        for sum_right, B_right, right in parts:
+            t = sum_left + sum_right
+            A = sum_left - sum_right
+            B = B_left + B_right
+            D = A * A - 20 * B
+            if (2 <= t <= 8 and abs(A) <= 10 and D >= 0
+                    and degree_possible(left, right)):
+                records.add((t, B, A, D))
+
+    nonsquares = {D for _, _, _, D in records if isqrt(D) ** 2 != D}
+    assert nonsquares == {20, 24, 41, 60}
+    assert {(t, A) for t, _, A, D in records if D == 20} == {
+        (6, -10), (6, 10)}
+    assert {(t, A) for t, _, A, D in records if D == 24} == {
+        (6, -8), (6, 8)}
+    assert {(t, A) for t, _, A, D in records if D == 41} == {
+        (7, -9), (7, 9)}
+    assert {(t, A) for t, _, A, D in records if D == 60} == {
+        (8, -10), (8, 10)}
+
+    # Signed square roots a of the rational-squareclass states.
+    vertices = set()
+    state_types = set()
+    for t, B, A, D in records:
+        a = isqrt(D)
+        if a * a != D:
+            continue
+        vertices.add((A, a))
+        vertices.add((A, -a))
+        state_types.add((t, B, A, a))
+
+    # Enumerate maximal pairwise-compatible sets under
+    # a_x a_y = A_x A_y (mod 20), using exact Bron--Kerbosch recursion.
+    adjacency = {
+        x: {y for y in vertices if y != x
+            and (x[1] * y[1] - x[0] * y[0]) % 20 == 0}
+        for x in vertices
+    }
+    cliques = []
+
+    def maximal_cliques(current, possible, excluded):
+        if not possible and not excluded:
+            cliques.append(frozenset(current))
+            return
+        pivot = max(possible | excluded,
+                    key=lambda x: len(possible & adjacency[x]),
+                    default=None)
+        candidates = possible - (adjacency[pivot] if pivot is not None else set())
+        for vertex in list(candidates):
+            maximal_cliques(current | {vertex},
+                            possible & adjacency[vertex],
+                            excluded & adjacency[vertex])
+            possible.remove(vertex)
+            excluded.add(vertex)
+
+    maximal_cliques(set(), set(vertices), set())
+    multipliers = (1, 9, 11, 19)
+    assert len(cliques) == 4
+    assert sorted(len(clique) for clique in cliques) == [15, 15, 17, 17]
+    assert sorted(
+        next(r for r in multipliers
+             if all((a - r * A) % 20 == 0 for A, a in clique))
+        for clique in cliques
+    ) == list(multipliers)
+
+    # In the r=11 class, every nonintegral state is strictly half-integral
+    # and has one of the only deficits supported by the parity argument.
+    for t, B, A, magnitude in state_types:
+        for a in {magnitude, -magnitude}:
+            if (a - 11 * A) % 20 == 0 and (a - A) % 20 != 0:
+                assert t in (5, 7)
+                assert (a - A) % 10 == 0
+
+    return len(records), len(vertices)
+
+
 def main():
     raw = locally_consistent = easy = certified = cut_sizes = 0
     smallest_slack = None
@@ -162,10 +270,13 @@ def main():
         {2: 75, 3: 35, 5: 1},
         {2: 70, 3: 40},
     ]
+    balanced_records, balanced_vertices = balanced_root_certificate()
     print("Verified 127 profiles: 72 elementary and 29 exact dual certificates.")
     print("All 3,502 possible smallest component sizes fail; minimum slack 284.")
     print("Every surviving light graph is connected; every root-order lower bound exceeds 19.")
     print("The half-integral support and 5+15 root profile bounds also pass.")
+    print(f"Balanced root: {balanced_records} coordinate states and "
+          f"{balanced_vertices} signed scalar types reduce to four congruence classes.")
 
 
 if __name__ == "__main__":
