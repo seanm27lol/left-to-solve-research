@@ -39,3 +39,5 @@ The component identities give $Q(D_s)=0$. It is the smaller root since $D_s<F_s<
 * [Common quotients](almost-perfect-common-quotients.md) gives one polynomial in $N$ divisible by $G$ at full prime-power precision.
 
 These results leave open solutions with dispersed primes and small shared quotient divisors. The proof and the checks above do not rely on reproducing Shnoudi's bounded-component computations. [Shnoudi, Theorems 4.1, 7.8, 9.6](https://doi.org/10.5281/zenodo.23674490).
+
+[The smallest Mersenne branch](almost-perfect-mersenne.md) excludes $p=2N-1$ and gives $N-1\nmid D_p$ for every $t\ge2$ in the three-prime square case. [The component norm obstruction](almost-perfect-component-norm.md) applies to each of the remaining possible bases separately.
