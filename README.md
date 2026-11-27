@@ -14,7 +14,9 @@ Proof manuscripts, literature references, computational checks, and Lean formali
 
 ## Latest results
 
-All ten conjectures in the [Lean tracker](lean/README.md) now have complete kernel-checked outcomes, comprising eight proofs and two disproofs. The [combined verification run](https://github.com/seanm27lol/left-to-solve-research/actions/runs/45916292251) checked every file against its proposed catalog statement. The five latest proofs establish the digit-subtraction and digit-range limits, the exact Hankel determinant numerator, and both paired-factorization limits. All ten statement PRs still awaited maintainer review at the November 26 check.
+The [Rule 150 proof](lean/proofs/oeis-a071052.lean) establishes the full doubling recurrence for the number of zero cells. The [almost-perfect number proof](notes/almost-perfect-two-odd-primes.md) verifies Shnoudi’s two-odd-prime exclusion for every exponent. The almost-perfect number conjecture remains open for larger odd prime support.
+
+On November 26, all ten conjectures then in the [Lean tracker](lean/README.md) had complete kernel-checked outcomes, comprising eight proofs and two disproofs. The [combined verification run](https://github.com/seanm27lol/left-to-solve-research/actions/runs/45916292251) checked every file against its proposed catalog statement. The five latest proofs establish the digit-subtraction and digit-range limits, the exact Hankel determinant numerator, and both paired-factorization limits. All ten statement PRs still awaited maintainer review at the November 26 check.
 
 | Written work added after the initial report | Result |
 |---|---|

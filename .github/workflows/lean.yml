@@ -5,6 +5,11 @@ on:
     paths:
       - 'lean/**/*.lean'
       - '.github/workflows/lean.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'lean/**/*.lean'
+      - '.github/workflows/lean.yml'
   workflow_dispatch:
 permissions:
   contents: read
@@ -50,6 +55,10 @@ jobs:
           fi
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
           "$HOME/.elan/bin/lake" exe cache get
+
+      - name: Check the almost-perfect number theorem and its axiom audit
+        working-directory: formal-conjectures
+        run: lake env lean -DwarningAsError=true "$GITHUB_WORKSPACE/lean/research/AlmostPerfectTwoOdd.lean"
 
       - name: Compile every statement and audit every proof
         env:
