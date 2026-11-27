@@ -23,3 +23,17 @@ $$
 3(N-1)\Phi(y)\Phi(z)-Ny^2z^2+1=0\pmod {17}.
 $$
 For each of the two residues of $N$, evaluating the left hand side on the $17^2$ ordered pairs gives zero solutions. This test applies to any of the three bases independently. The norm criterion above also applies separately at all three. A uniform proof must still exclude triples satisfying every one of these conditions. [Exact check](../checks/almost_perfect_component_norm.py).
+
+## A second local test, including even levels
+
+In fact every prime $\ell\ge5$ dividing $T$ with $(-3N/\ell)=-1$ must also satisfy
+$$
+\left(\frac{A^2-14A+1}{\ell}\right)\in\{0,1\}.
+$$
+In the norm equation modulo $\ell$ the coefficient $B(4A-3B)$ is a nonsquare unit. Hence $Z=0$ and $(4A-3B)V=-3B$ there. The relation $A(3B+4)=3B$ gives $4A-3B=-3AB$ modulo $\ell$. Both $A,B$ are units, so $V=1/A$. Substituting in $Z=0$ gives $y+z=-(A+1)/(2A)$, whence
+$$
+4A^2(y-z)^2=(A+1)^2-16A=A^2-14A+1\pmod\ell .
+$$
+This test can exclude a base even when the valuation of $T$ is even. It depends only on $N$ and that base $x$, so each of $p,r,s$ must pass it.
+
+For example, at $t\equiv2\pmod{28}$ one has $N\equiv4\pmod{29}$. Each of $x\equiv24,25,26\pmod{29}$ gives $T\equiv0$, $(-3N/29)=-1$, and a nonsquare $A^2-14A+1$. Thus none of the three bases can lie in these residue classes. The checker independently substitutes all $29^2$ pairs $(y,z)$ for each excluded residue in the original equation. The same argument at $\ell=17$ recovers the two odd-level exclusions above. For the remaining unbounded family one would need to force a failing condition at some base or otherwise contradict the original equation.
