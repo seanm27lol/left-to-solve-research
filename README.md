@@ -14,7 +14,7 @@ Proof manuscripts, literature references, computational checks, and Lean formali
 
 ## Latest results
 
-The [Lean tracker](lean/README.md) records five complete, kernel-checked results from this collection. The latest three establish every divisor-average denominator (A346644), prove the signed Stirling limit (A354478), and refute the proposed digit mean–mode ratio (A379181).
+All ten conjectures in the [Lean tracker](lean/README.md) now have complete kernel-checked outcomes, comprising eight proofs and two disproofs. The [combined verification run](https://github.com/seanm27lol/left-to-solve-research/actions/runs/45916292251) checked every file against its proposed catalog statement. The five latest proofs establish the digit-subtraction and digit-range limits, the exact Hankel determinant numerator, and both paired-factorization limits. All ten statement PRs still awaited maintainer review at the November 26 check.
 
 | Written work added after the initial report | Result |
 |---|---|
@@ -22,7 +22,7 @@ The [Lean tracker](lean/README.md) records five complete, kernel-checked results
 | [Digit subtraction](notes/06-own.md#a-rate-from-consecutive-decimal-blocks) and [digit range versus mode](notes/06-own.md#an-effective-error-bound-for-a383307) | Rates of convergence for both proposed ratios. |
 | [The two factorization problems](notes/06-own.md#exact-exceptional-integers-and-the-common-leading-deficit) | Exact classification of exceptional integers and their common leading counting constant. |
 | [Hankel matrices](notes/06-own.md#local-smith-factors-and-denominators-of-every-inverse-entry) | Local Smith exponents and the exact reduced denominator of each inverse entry. |
-| [Chebyshev primality](notes/17-chebyshev.md#a-congruence-obstruction-for-the-number-of-prime-factors) | Restrictions on the prime factors of a composite and exhaustive completions for 42,188 prefixes. The full conjecture remains open. |
+| [Chebyshev primality](notes/17-chebyshev.md#a-congruence-obstruction-for-the-number-of-prime-factors) | Restrictions on signed prime residues modulo 48 and exhaustive completions for 42,188 prefixes. The full conjecture remains open. |
 
 The downloadable reports preserve the initial research collection.
 
@@ -43,6 +43,7 @@ Use Python 3.11 or later. The spectral checks require NumPy and SciPy. The almos
 
     python checks/digit_growth.py
     python checks/sequences_and_determinants.py
+    python checks/chebyshev_residues.py
     python checks/four_squares.py
     python checks/eigenvalue_bounds.py
     python checks/almost_perfect_numbers.py 11

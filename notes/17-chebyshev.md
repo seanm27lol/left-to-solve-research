@@ -41,6 +41,26 @@ Reduction modulo $q$ first gives $r\equiv1\pmod q$. The sum on the right is also
 
 **Five or seven prime factors force $n\equiv1\pmod{12}$ and $\gcd(n,15)=1$.** Taking $q=4$ excludes $n\equiv3\pmod4$ for both factor counts. Consequently $3$ cannot divide $n$, since both $3-1$ and $3+1$ would divide $n-1$. If $n\equiv-1\pmod3$, taking $q=3$ would require $r\equiv1\pmod9$. This excludes both counts again. Thus $n\equiv1\pmod{12}$. Both $5-1$ and $5+1$ now divide $n-1$, excluding the factor 5.
 
+### Which signs can occur for five or seven factors?
+
+Let $u_i=\varepsilon_i p_i$ and $S=\prod_i\varepsilon_i$. The equation $W=1$ says that $e_{r-1}(u_1,\ldots,u_r)=S$, where $e_{r-1}$ is the sum of products omitting one factor at a time. Write $b_j$ for the number of $u_i$ congruent to $-1$ modulo $j$, for $j=3,4$. Then the following are necessary conditions.
+
+| Number of primes | Product of signs $S$ | $b_3$ | $b_4$ | $n\bmod48$ |
+|---:|---:|---:|---:|---|
+| 5 | $+1$ | 2 | 2 | $1,13,25,37$ |
+| 7 | $-1$ | 3 | 3 | $1,25$ |
+| 7 | $-1$ | 3 | 7 | $13,37$ |
+
+To see the sign condition, write $u_i=1+2a_i$. Modulo 4 the symmetric sum equals $r+2(r-1)\sum_i a_i\equiv r$, as $r$ is odd. Thus $S=+1$ for five and $S=-1$ for seven. Since $n\equiv1\pmod{12}$ and each $p_i$ is coprime to 6, reduction of $W$ modulo 3 gives $r-2b_3\equiv1\pmod3$, while $(-1)^{b_3}=S$. These give the values of $b_3$ in the table.
+
+Modulo 8 the same expansion gives
+$$
+ S\equiv r+2(r-1)\sum_i a_i+4(r-2)\sum_{i<j}a_i a_j\pmod8.
+$$
+The two sums have parities $b_4$ and $\binom{b_4}{2}$. Also $(-1)^{b_4}=S$ by reduction of $\prod_i u_i=Sn$ modulo 4. For five primes these conditions force $b_4=2$. For seven they give $b_4=3$ or $7$.
+
+For the last column one can exhaust the 16 units modulo 48, allowing repeated residues. For each unordered residue list take $P=\prod_i u_i$, set $n=SP$ modulo 48, and require $n\equiv1\pmod{12}$, $e_{r-1}(u)\equiv S\pmod{48}$, and $\gcd(48,u_i-1)\mid n-1$ for every $i$. The last test follows from $p_i-\varepsilon_i\mid n-1$. Integer representatives in the symmetric sum avoid division modulo 48. The enumeration gives exactly the displayed residue patterns. Whether any surviving residue pattern contains a composite satisfying the original test remains open. [Reproduce the residue enumeration](../checks/chebyshev_residues.py)
+
 ## Finite completion of a prescribed prime prefix
 
 For five or seven factors write the known smallest $r-2$ primes as $p_1,\ldots,p_{r-2}$, with product $A$, and denote the last two by $x<y$. Fix prefix signs and let $T=\sum_i\varepsilon_i A/p_i$. It is nonzero because precisely one summand survives modulo each $p_i$. For signs $s=\varepsilon_x$ and $t=\varepsilon_y$, the equation $W=1$ becomes

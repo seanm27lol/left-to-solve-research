@@ -12,6 +12,17 @@ Fix $0<\epsilon<4.5$. Among the $10^n$ numbers from zero through $10^n-1$, pad t
 
 [Sequence and conjecture](https://oeis.org/A309417) · [Hoeffding's bounded-sum inequality](https://doi.org/10.1080/01621459.1963.10500830).
 
+### A fourth-moment proof checked in Lean
+
+Let $A=a(n)$, $B=10^n$, $u=nA/B$, and $s(x)$ be the decimal digit sum. The $A$ positive states form a set $S$ because every subtraction strictly decreases $x$. Telescoping gives $\sum_{x\in S}s(x)=B$. Thus the sum of $D(x)=2s(x)-9n$ along this specific path is $2B-9nA$.
+
+Over all $B$ padded decimal words, appending digit $j$ adds $2j-9$ to $D$. Its mean square is 33 and its mean fourth power is $19338/10$. Odd moments of the increment vanish by symmetry. The resulting recurrence gives $\sum_{x<B}D(x)^4\le3300n^2B$. Including the initial state $B$ increases this bound to at most $10000n^2B$ for $n\ge1$. The fourth-power mean inequality on $S$ gives
+$$
+ (2B-9nA)^4\le A^3\sum_{x\in S}D(x)^4,\qquad
+ n(2-9u)^4\le10000u^3.
+$$
+For $n\ge10001$, $u>1$ would imply $9u-2>u$ and hence $nu<10000$, a contradiction. Substituting $u\le1$ gives $|u-2/9|\le(10/9)n^{-1/4}$ and therefore the desired consecutive-term ratio. The proof uses no independence assumption on the visited states. [Complete Lean proof](../lean/proofs/oeis-a309417.lean)
+
 ### A rate from consecutive decimal blocks
 
 The subtraction count satisfies the stronger estimate
@@ -35,6 +46,16 @@ Now $\mathbb E A_h=\mu$ and $\operatorname{Var}(A_h)=33(n-b)/4$. Writing $z=A_h-
 For a uniformly random $n$-digit positive integer, failure to contain both 0 and 9 has probability at most $2(9/10)^{n-1}$. When both occur the range equals 9. The independent uniform suffix of length $n-1$ has a unique winner separated from all other digit counts by at least two with probability tending to one. Indeed, each pairwise count difference is a centered sum of bounded iid variables of positive variance. The central limit theorem and continuity of the normal law imply that the probability of any such difference lying in $[-1,1]$ tends to zero. A union bound over the 45 pairs proves the assertion. By symmetry digit 9 wins this well-separated contest with probability tending to $1/10$; the leading digit cannot change that winner. Hence $a(n)\sim(9/10)10^{n-1}$, proving the proposed ratio ten. The mean-equals-mode cousin A379181 has a different answer because a digit mean of $4.5$ cannot be a mode.
 
 [Sequence and conjecture](https://oeis.org/A383307) · [Mean-equals-mode comparison](https://oeis.org/A379181).
+
+### A finite Fourier proof checked in Lean
+
+Fix two different digits. In a uniform suffix of length $n$, their count difference $D$ changes by $1,-1,0$ with probabilities $1/10,1/10,8/10$. For a fixed modulus $m\ge2$ and $\zeta=e^{2\pi i/m}$, Fourier inversion gives
+$$
+ \Pr(D\equiv r\bmod m)
+ =\frac1m\sum_{j=0}^{m-1}\zeta^{-jr}
+ \left(\frac{8+2\cos(2\pi j/m)}{10}\right)^n.
+$$
+Every nonconstant term decays, so the probability converges to $1/m$. For any fixed integer $r$, the probability that $D=r$ is bounded by the probability of its residue class. Sending $m$ to infinity shows that the probabilities of differences $-1,0,1$ each vanish. A missing digit has probability $(9/10)^n$. With probability tending to one all digits occur and all counts are separated by at least two. Any of the nine permitted leading digits then preserves the winner and gives range nine. The Lean proof checks the bijection with the integers in the catalog definition, including the nonzero leading digit. [Complete Lean proof](../lean/proofs/oeis-a383307.lean)
 
 ### An effective error bound for A383307
 
@@ -65,6 +86,18 @@ For A347748 the factors must both end in 4 in one factorization and both end in 
 For A348546 the analogous necessary class is $9\bmod10$. A prime factor $p\equiv3\bmod10$ automatically has cofactor $N/p\equiv3\bmod10$. A prime factor $q\equiv7\bmod10$ supplies the second factorization. Almost every integer in the required class has both, by the same argument. Its density is $1/10$. Positive density $\delta$ gives $(9\delta+o(1))10^{n-1}$ such $n$-digit integers by subtraction of the two endpoint counts. Both catalog ratios therefore tend to ten. A search treating the two possible factorizations as independent would miss their common congruence restriction.
 
 [First problem](https://oeis.org/A347748) · [Second problem](https://oeis.org/A348546) · [Related single-factorization density](https://oeis.org/A337856) · [Dirichlet's theorem and reciprocal primes in progressions](https://kskedlaya.org/ant/chap-primes-in-ap.html).
+
+### A common finite sieve checked in Lean
+
+The same two classes of odd primes, $3$ and $7$ modulo 10, suffice for both catalog questions. For $N=4t$ such a prime divides $t$ whenever it divides $N$. Its residue modulo 5 supplies the required factorization of $4t$. For $N\equiv9\pmod{10}$, division by either prime leaves the cofactor in that prime's own class modulo 10.
+
+The formal proof derives divergence of $\sum 1/p$ in each class from Mathlib’s pole estimate for its von Mangoldt series. If the reciprocal sum converged, dominated convergence would force $(s-1)\sum_n \Lambda(n)\mathbf1_{n\equiv a}/n^s$ to tend to zero. On prime terms the dominating function is $1/p$, by $t\le e^t$ with $t=(s-1)\log p$, and the prime-power remainder is summable. The pole estimate gives a strictly positive lower limit.
+
+For a finite set $S$ of those primes put $d=\prod_{p\in S}p$. Integers avoiding $S$ are coprime to $d$. Their number in an interval of length $X$ is at most $\varphi(d)(\lfloor X/d\rfloor+1)$, and
+$$
+ \frac{\varphi(d)}{d}\left(1+\sum_{p\in S}\frac1p\right)\le1.
+$$
+Choosing $S$ first makes the limiting fraction arbitrarily small. Only a zero-density subset of either ambient progression can fail. This proves the two consecutive-term ratios independently of the sharper deficit estimates below. [Factors ending in 4 and 6](../lean/proofs/oeis-a347748.lean) · [Factors ending in 3 and 7](../lean/proofs/oeis-a348546.lean)
 
 ### Exact exceptional integers and the common leading deficit
 
@@ -120,6 +153,18 @@ $$
 This includes $n=0$. For entries $1/(a+d(i+j))$ with coprime positive $a,d$, the identical argument shows that the surviving primes are drawn from the divisors of $d$, with exponent $N(N-1)v_q(d)+2\sum_k v_q(k!)$ for each $q\mid d$.
 
 [Sequence and conjecture](https://oeis.org/A122251) · [Krattenthaler, *Advanced determinant calculus*, equation 2.7](https://www.mat.univie.ac.at/~slc/wpapers/s42kratt.pdf).
+
+### A recursive proof checked in Lean
+
+Write $H_N(a,p)_{ij}=1/(a+p(i+j))$ for $0\le i,j<N$. Elimination at the top left gives
+$$
+ \det H_{n+1}(a,p)=\frac1a
+ \left(\frac{p^n n!}{\prod_{i=1}^n(a+pi)}\right)^2
+ \det H_n(a+2p,p).
+$$
+Indeed its Schur complement is $H_n(a+2p,p)$ with row and column $i$ both scaled by $pi/(a+pi)$ for $1\le i\le n$ in the original indexing.
+
+Let $m=n!/p^{v_p(n!)}$. Since $p$ is invertible modulo $m$, the $n$ progression terms are congruent, after division by $p$ modulo $m$, to $n$ consecutive integers. Their product is divisible by $n!$, so $m$ divides the progression product. If $p\nmid a$, none of the progression terms is divisible by $p$. The sole surviving numerator factor at this step is $p^{2(n+v_p(n!))}$. Induction from the one-by-one determinant, followed by Legendre’s factorial formula, gives the exact signed numerator in the catalog for $a=1$. [Complete Lean proof](../lean/proofs/oeis-a122251.lean)
 
 ### Local Smith factors and denominators of every inverse entry
 
