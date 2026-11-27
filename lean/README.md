@@ -1,6 +1,6 @@
 # Lean submissions to Left to Solve
 
-Ten source conjectures from the 83-entry collection have statement pull requests. The site compiles each Lean statement, and a maintainer reviews its fidelity to the source. After the statement merges, a separate PR can prove or disprove it. The table records the latest compiler verdict checked on 26 November 2026. Each PR links to its live status.
+Ten source conjectures from the 83-entry collection had statement pull requests on November 26. The site compiles each Lean statement, and a maintainer reviews its fidelity to the source. After the statement merges, a separate PR can prove or disprove it. The table records the latest compiler verdict checked on 26 November 2026. Each PR links to its live status.
 
 | Statement | Upstream PR | Catalog compiler | Written argument |
 |---|---|---|---|
@@ -26,6 +26,12 @@ The [checker accepted both complete proofs](https://github.com/seanm27lol/left-t
 For A379181, the [kernel accepted the disproof](https://github.com/seanm27lol/left-to-solve-research/actions/runs/45912974796). It proves the bound $a(n)\le 2(197/20)^n$ against the catalog’s actual digit-word definition and refutes the proposed ratio ten. The sharper value in the research manuscript has a separate written argument.
 
 For A309417 the [digit-subtraction run](https://github.com/seanm27lol/left-to-solve-research/actions/runs/45914495426) verified the fourth-moment argument. For A122251 the [Hankel run](https://github.com/seanm27lol/left-to-solve-research/actions/runs/45914971284) verified the exact signed numerator for every prime and every matrix size. For A383307 the [digit-range run](https://github.com/seanm27lol/left-to-solve-research/actions/runs/45915656440) verified the suffix count, leading-digit restriction, and limit. For A347748 and A348546 the [combined run](https://github.com/seanm27lol/left-to-solve-research/actions/runs/45916292251) checked the sieve and both translations from factorization to residue classes. The written error rates, Smith factors, and two-term factorization counts go beyond these ten catalog statements.
+
+## November 27 additions
+
+**Rule 150 (OEIS A071052).** The complete proof verifies $a(2n)=a(n)+2n$ for all $n\ge0$, where $a(n)$ counts zero cells in row $n$. The statement defines the three-parent update and the finite row. [Catalog statement PR #3436](https://github.com/GuillaumeBAUD-coder/open-math-agents/pull/3436) · [Statement](statements/oeis-a071052.lean) · [Proof](proofs/oeis-a071052.lean) · [Source and written proof](../notes/07-sequences.md#a071052--even-time-zero-count-in-rule-150).
+
+**Almost-perfect numbers.** A standalone Lean theorem proves that every positive almost-perfect number with at most two distinct odd prime divisors is a power of two. It formalizes the classification in Shnoudi’s Theorem 6.3. The catalog’s unrestricted almost-perfect number question remains open. [Formal proof](research/AlmostPerfectTwoOdd.lean) · [Written proof and literature](../notes/almost-perfect-two-odd-primes.md).
 
 The [repository verifier](../.github/workflows/lean.yml) runs the pinned upstream checker on the submitted statements and on candidate proofs against those statements. The upstream catalog still requires its own checker and maintainer review. The remaining entries can be found in the [research index](../INDEX.md).
 

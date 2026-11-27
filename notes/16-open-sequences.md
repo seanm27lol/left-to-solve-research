@@ -4,7 +4,12 @@
 
 Does a positive integer other than a power of two satisfy 1+σ(n)=2n, with σ the sum of positive divisors? This is exactly the formal predicate, including at zero. Every power of two qualifies. Antalan and Dris derive the odd-square part and an upper bound on the power of two in terms of the square root. Kishore treats the odd case with five distinct prime divisors. [Catalog](https://lefttosolve.com/p/AlmostPerfectNumbers.exists_almost_perfect_not_power_of_two) · [Antalan–Dris](https://arxiv.org/abs/1602.04248) · [Kishore](https://doi.org/10.1090/S0025-5718-1978-0485658-X).
 
-**Restricted result.** There is no non-power-of-two solution with at most one distinct odd prime divisor. There is no solution with exactly two distinct odd prime divisors and two-adic valuation from 0 to 11 inclusive. The second statement covers arbitrary odd prime exponents and sizes. The proof below for two-adic valuation 1 can be checked by hand. The remainder uses the exact finite search in `the accompanying verification scripts`. No priority claim is made for these exclusions.
+**The two-prime case holds for every exponent.** If $n$ is almost perfect and has at most two distinct odd prime divisors, then $n$ is a power of two. This includes $n=1$. Ibrahim Amin Nicola Shnoudi gives the result as Theorem 6.3. For the two-prime case the proof reduces the odd part to $p^2q^2$ and derives an even integer strictly between 0 and 2. [Full argument and attribution](almost-perfect-two-odd-primes.md) · [Lean proof](../lean/research/AlmostPerfectTwoOdd.lean).
+
+The first remaining case has three distinct odd primes. Writing $n=2^a b$ with $b$ odd and $t=2^{a+1}-1$, the governing equation is $t(\sigma(b)-b)=b-1$. Shnoudi’s overview describes a finite decision procedure for each fixed level in the three-prime case and gives computational bounds. The full catalog question allows arbitrarily many odd primes. [Shnoudi, §4.2](https://www.academia.edu/179631267/On_the_Almost_Perfect_Number_Conjecture_Overview_of_the_Project).
+
+<details>
+<summary>Earlier fixed-valuation argument and sieve through a = 11</summary>
 
 Write n=2^a b with b odd, and t=2^(a+1)−1. From σ(2^a)σ(b)=2n−1 we get
 $$
@@ -35,7 +40,9 @@ q^B=\frac{t p^{A+1}-C}{F p^A-tq}.
 $$
 The swapped case treats the second bound. A positive exact quotient must be a positive even power of q. The numerator is positive for all candidates: F>0 gives q<(t+1)^2<p², t≥3 whenever candidate pairs exist, and then (t+(p-1)(q-1)<t+p^3<t p^3). Thus zero denominators can be discarded, and swapping p,q also preserves positivity. The implementation iterates primes and all bounded even exponents using integers and tests divisibility exactly. The counts of candidate pairs for a=0 through 11 are 0, 3, 6, 70, 93, 540, 1,957, 12,146, 19,068, 90,501, 336,851, and 1,370,021. All 1,831,256 pairs were eliminated.
 
-**Two routes.** (1) The exact identity supplies a finite test for every fixed two-adic valuation and two-prime odd support. For a bound uniform in a, control the divisibility $Fp^A-tq\mid tp^{A+1}-C$ and its symmetric counterpart as the Mersenne-type parameter t varies. The hyperbolic prime-pair bound alone grows with t. (2) For arbitrary prime support use the product $\sigma(b)/b=\prod_{p^e\Vert b}(1+p^{-1}+\cdots+p^{-e})=1+1/t-1/(tb)$ to branch on small odd primes, bounding the contribution of unspecified primes by p/(p−1), as in the odd near-perfect abundance estimates of Kishore. At any finite branching stage the number of further factors is unbounded. No uniform prime-support bound or contradiction follows.
+The [integer sieve](../checks/almost_perfect_numbers.py) implements this earlier calculation.
+
+</details>
 
 ## A three-by-three magic square of distinct squares
 
