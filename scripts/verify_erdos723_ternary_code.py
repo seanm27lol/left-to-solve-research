@@ -215,6 +215,29 @@ def exclude_thirteen_point_pattern(pattern: tuple[int, ...]) -> None:
     assert demanded_negative_line_incidences > available_negative_line_incidences
 
 
+def exclude_seventeen_point_odd_set() -> None:
+    """Verify the exact secant-count contradiction for an odd 17-set.
+
+    The geometric proof first shows that only 1-, 3-, and 5-secants can
+    occur.  These three equations determine their counts.  Pairwise
+    intersections of the ten 5-secants must lie in the set, so their local
+    multiplicities violate Cauchy's inequality.
+    """
+
+    # n1+n3+n5=157, n1+3n3+5n5=17*13, and
+    # 3n3+10n5=C(17,2).  Elimination gives the unique solution below.
+    n1, n3, n5 = 135, 12, 10
+    assert n1 + n3 + n5 == 157
+    assert n1 + 3 * n3 + 5 * n5 == 17 * 13
+    assert 3 * n3 + 10 * n5 == 17 * 16 // 2
+
+    sum_h = n5 * 5
+    sum_choose_h_2 = n5 * (n5 - 1) // 2
+    sum_h_sq = sum_h + 2 * sum_choose_h_2
+    assert (sum_h, sum_choose_h_2, sum_h_sq) == (50, 45, 140)
+    assert sum_h * sum_h > 17 * sum_h_sq
+
+
 def main() -> None:
     all_norm_patterns = norm_patterns()
     assert len(all_norm_patterns) == 35
@@ -241,6 +264,7 @@ def main() -> None:
     ]
     assert len(thirteen_point) == 1
     exclude_thirteen_point_pattern(thirteen_point[0])
+    exclude_seventeen_point_odd_set()
 
     print(f"norm/sum multiplicity patterns: {len(all_norm_patterns)}")
     print(f"patterns with odd support at least 13: {len(blocking_candidates)}")
@@ -248,7 +272,8 @@ def main() -> None:
     for pattern in survivors:
         print(f"  |T|={odd_support(pattern):2d}  z multiplicities={as_dictionary(pattern)}")
     print("excluded the unique |T|=13 pattern by the 36-versus-12 incidence count")
-    print("VERIFIED: five weight-21 z-multiplicity patterns remain")
+    print("excluded the |T|=17 pattern by the 5-secant Cauchy contradiction")
+    print("VERIFIED: four weight-21 z-multiplicity patterns remain")
 
 
 if __name__ == "__main__":

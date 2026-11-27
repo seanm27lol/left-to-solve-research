@@ -58,3 +58,33 @@ This is genuine kernel-checked progress, but it does not substitute for
 Corollary 15.11. Until that enumeration theorem is formalized, the catalog
 target has a published mathematical proof but not an end-to-end
 kernel-checked proof in the pinned environment.
+
+## Kernel-checked Li--Qiao finite envelope
+
+[`lean/research/Erdos1160LiQiaoEnvelope.lean`](../lean/research/Erdos1160LiQiaoEnvelope.lean)
+formalizes the finite-envelope calculation on pp. 97--98 of Yinan Li and
+Youming Qiao's v3 proof of Corollary 15.11. It proves the exact identity
+
+\[
+ Q(m-1)-Q(m)=-\frac29m^2+\frac{10}{9}m-\frac{14}{27},
+\]
+
+the required monotonicity of \(Q(k)+Ck\) for \(C\ge1\), and the bound
+
+\[
+ \frac{\sum_{k<m}a_k}{a_m}
+ \le m\,2^{Q(m-1)+C(m-1)-Q(m)}
+\]
+
+from the pointwise two-sided envelopes used in the paper. This source was
+kernel-checked with Lean 4.33.1 and the mathlib checkout used by pinned Formal
+Conjectures commit `9097e2f90e66d2f6244209cb1c07f7120d17ec53`.
+
+This does **not** prove the catalog target. Two substantive published inputs
+remain to be formalized: Li--Qiao Theorem 14.4, equation (160), giving the
+uniform two-sided estimate for \(f(p^m)\), and Corollary 15.10, giving
+\(F_2(x)/F(x)\to1\). Theorem 14.4 in turn uses Theorem 14.3 together with
+equation (159), attributed there to Higman Theorem 2.3 and
+Bläser--Li--Qiao--Rogovskyy Theorem 1.3 and Section 4.3. Corollary 15.10 uses
+Corollary 15.8 and Proposition 15.9, including the fixed-quotient extension
+counts and Pyber's prescribed-Sylow theorem.

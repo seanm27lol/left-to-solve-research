@@ -75,6 +75,62 @@ base-two Wieferich witness. The relevant order is $A$ in the minus branch
 and $2A$ in the plus branch, so cubefullness implies
 \(q^3\mid2^{q-1}-1\) and likewise for $r$.
 
+There are two further exact restrictions. First,
+
+\[
+ \boxed{\gcd(b,c)=1.}
+\]
+
+Indeed, if a prime $d>1$ divided both exponents, then the right side would
+be a perfect $d$th power, say $Y^d$.  In the minus branch this would give
+$2^A-Y^d=1$, contradicting Mihăilescu's theorem. In the plus branch it
+would give $Y^d-2^A=1$; the unique consecutive nontrivial perfect powers
+would force $A=3$, which is not a surviving power-of-two exponent.
+
+Second, the exponents are the exact base-two Wieferich valuations:
+
+\[
+ \boxed{b=v_q(2^{q-1}-1),\qquad c=v_r(2^{r-1}-1).}
+\]
+
+For the minus branch, $\operatorname{ord}_q(2)=A$ and $A\mid q-1$;
+LTE applied to $(2^A)^{(q-1)/A}-1$ gives the equality. For the plus branch,
+$\operatorname{ord}_q(2)=2A$ and the same argument applies. Thus any
+three-support candidate requires two distinct primes whose exact base-two
+Wieferich valuations are coprime integers at least three. This is an
+unbounded restriction, not a proof that either residual family is empty.
+
+The first nontrivial congruence beyond the valuations can also be recorded
+exactly. In the minus branch write
+
+\[
+ q=1+2Au,\qquad r=1+2Av,\qquad
+ T=\frac{2^{A-1}-1}{A}.
+\]
+
+Expansion modulo $(2A)^2$ gives
+
+\[
+ \boxed{bu+cv\equiv T\pmod{2A}.}
+\]
+
+Here $T$ is odd. The quadratic-character constraint also says that the
+support primes are $1$ or $7\pmod8$, and at least one is $7\pmod8$ with
+odd exponent.
+
+In the plus branch the cases $A=4,8$ give only the single Fermat support
+prime $17,257$, so a two-prime-support candidate has $A=2^s$ with $s\ge4$.
+Euler's criterion strengthens $q,r\equiv1\pmod{2A}$ to
+$q,r\equiv1\pmod{4A}$. Writing $q=1+4Au$ and $r=1+4Av$, expansion modulo
+$(4A)^2$ gives
+
+\[
+ \boxed{bu+cv\equiv0\pmod{4A}.}
+\]
+
+In particular, if the two terms have unequal 2-adic valuations below
+$s+2$, they cannot cancel; those parameter choices are excluded.
+
 ## Formal status and attribution
 
 The pinned Mathlib contains no Bang--Zsigmondy theorem. A kernel-checked Lean
