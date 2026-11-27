@@ -39,18 +39,22 @@ theorem itself.  Public searches found no Lean formalization of that input.
 Mathematical credit for the solved asymptotic target belongs to Yinan Li and
 Youming Qiao.
 
-Two small formal interfaces remain useful and are isolated for the next
-kernel-checked pass:
+The two small formal interfaces have now been discharged in
+[`lean/research/Erdos1160Density.lean`](../lean/research/Erdos1160Density.lean):
 
-1. prove `0 < Erdos1160.g n` for positive `n` by exhibiting the cyclic group
+1. `Erdos1160.g_pos` proves `0 < Erdos1160.g n` for positive `n` by exhibiting the cyclic group
    `Multiplicative (ZMod n)` in the finite isomorphism-class table already used
    by the prepared direct-product proof;
-2. prove the generic order-limit lemma which turns
+2. `Erdos1160Density.strict_from_previous_ratio` proves the generic order-limit lemma which turns
    `Tendsto (fun m => ((sum_{1 <= n < 2^m} g n : Nat) : Real) /
    g (2^m)) atTop (nhds 0)` and eventual positivity into the exact eventual
-   strict inequality.
+   strict inequality. `Erdos1160.variants.sum_strict_of_previous_ratio`
+   specializes it to the exact pinned catalog definition.
 
-The second item is a short application of `tendsto_order` and `div_lt_one`.
-Neither item substitutes for Corollary 15.11.  Until that enumeration theorem
-is formalized, the catalog target has a published mathematical proof but not
-an end-to-end kernel-checked proof in the pinned environment.
+These lemmas were compiled with Lean against pinned Formal Conjectures commit
+`9097e2f90e66d2f6244209cb1c07f7120d17ec53`. The finite-table encoding is
+adapted, with attribution, from Left to Solve PR 754 by @kamaleshanantha.
+This is genuine kernel-checked progress, but it does not substitute for
+Corollary 15.11. Until that enumeration theorem is formalized, the catalog
+target has a published mathematical proof but not an end-to-end
+kernel-checked proof in the pinned environment.
