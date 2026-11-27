@@ -83,3 +83,5 @@ As an independent check, the program factors $(Tx+sA)(Ty+tA)=T+stA^2$ for sample
 ## The two smallest primes with negative signs
 
 In the remaining order $7\le d<e<a<b<c<2d$, with negative signs at $d,e$, every five-prime candidate satisfies $10\gcd(d+1,e+1)\le d+1$. The reduction uses the signed cofactor equation and the required shifts. The bound holds for all prime sizes. [Proof and exact certificates](chebyshev-shift-bound.md).
+
+The five-prime follow-up gives a lower bound on the top prime gap for every sign order and excludes the tenth negative-shift ratio in the remaining interval. [Prime gaps](chebyshev-prime-gaps.md) · [Tenth ratio](chebyshev-ratio-ten.md).

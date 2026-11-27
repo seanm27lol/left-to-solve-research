@@ -4,6 +4,8 @@
 
 Does a positive integer other than a power of two satisfy 1+σ(n)=2n, with σ the sum of positive divisors? This is exactly the formal predicate, including at zero. Every power of two qualifies. Antalan and Dris derive the odd-square part and an upper bound on the power of two in terms of the square root. Kishore treats the odd case with five distinct prime divisors. [Catalog](https://lefttosolve.com/p/AlmostPerfectNumbers.exists_almost_perfect_not_power_of_two) · [Antalan–Dris](https://arxiv.org/abs/1602.04248) · [Kishore](https://doi.org/10.1090/S0025-5718-1978-0485658-X).
 
+Follow-up bounds constrain the spacing of the odd prime factors at arbitrary exponents and give local conditions on a three-prime square. [Prime spacing](almost-perfect-prime-spacing.md) · [Congruences](almost-perfect-prime-congruences.md).
+
 **Restricted result.** There is no non-power-of-two solution with at most one distinct odd prime divisor. There is no solution with exactly two distinct odd prime divisors and two-adic valuation from 0 to 11 inclusive. The second statement covers arbitrary odd prime exponents and sizes. The proof below for two-adic valuation 1 can be checked by hand. The remainder uses the exact finite search in `the accompanying verification scripts`. No priority claim is made for these exclusions.
 
 Write n=2^a b with b odd, and t=2^(a+1)−1. From σ(2^a)σ(b)=2n−1 we get
