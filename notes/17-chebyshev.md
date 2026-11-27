@@ -79,3 +79,7 @@ A zero denominator cannot produce a solution because $Ax>1$. This exhausts every
 | 7 | Fifth-smallest prime at most 67 | 4,368 | 0 |
 
 As an independent check, the program factors $(Tx+sA)(Ty+tA)=T+stA^2$ for sample prefixes and compares all odd integral pairs with the scan before primality or local filtering. The comparison covers 208 signed systems and 14 integral pairs. The small signed equation $-5\cdot7+3\cdot7+3\cdot5=1$ ensures the comparison includes actual solutions. The full Chebyshev primality equivalence remains open in this work. [Reproducible completion search and exact arithmetic checks](../checks/chebyshev_completions.py) · [Original conjecture](https://math.stackexchange.com/questions/2615963/a-congruence-involving-chebyshev-polynomials)
+
+## The two smallest primes with negative signs
+
+In the remaining order $7\le d<e<a<b<c<2d$, with negative signs at $d,e$, every five-prime candidate satisfies $10\gcd(d+1,e+1)\le d+1$. The reduction uses the signed cofactor equation and the required shifts. The bound holds for all prime sizes. [Proof and exact certificates](chebyshev-shift-bound.md).

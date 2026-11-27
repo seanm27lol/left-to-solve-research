@@ -1,0 +1,26 @@
+name: Verify Chebyshev shift bounds
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'checks/chebyshev_*family.py'
+      - 'checks/chebyshev_small_shift_ratios.py'
+      - '.github/workflows/chebyshev-shifts.yml'
+  pull_request:
+    paths:
+      - 'checks/chebyshev_*family.py'
+      - 'checks/chebyshev_small_shift_ratios.py'
+      - '.github/workflows/chebyshev-shifts.yml'
+jobs:
+  certificates:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run the ratio reduction and three exhaustive family checks
+        run: |
+          python3 checks/chebyshev_small_shift_ratios.py
+          python3 checks/chebyshev_7_11_family.py
+          python3 checks/chebyshev_9_13_family.py
+          python3 checks/chebyshev_9_14_family.py
