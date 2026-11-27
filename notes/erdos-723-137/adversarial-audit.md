@@ -25,16 +25,24 @@ This audit treats the result as a reduction, not as a solution of Erdős 723.
   size condition are established.  The exclusion of a cocktail-party
   attachment uses open neighborhoods and the exact common-gap count four.
 * **Dimension bookkeeping.** A bipartite root on 20 vertices is not excluded
-  by the norm argument, because its edge span has codimension one in the
-  residual space.  The note explicitly leaves this case open.  A bipartite
-  root on 21 vertices does fill the residual space and is excluded by
-  `(a-b)^2=21`.
-* **Half-integral coordinates.** In 20 dimensions the parity argument that
-  worked in odd residual dimension no longer excludes strict half-integers.
+  merely by the norm argument, because its edge span has codimension one in
+  the residual space.  A bipartite root on 21 vertices does fill the residual
+  space and is excluded by `(a-b)^2=21`.  For 20 vertices, the strengthened
+  argument removes every unequal pair of part sizes and leaves the balanced
+  `10+10` case open.
+* **Half-integral coordinates.** In 20 dimensions the parity argument from an
+  odd number of coordinates does not by itself exclude strict half-integers.
   Completing the square gives `||z||^2=5`, and an exhaustive hand
-  classification of integer vectors of norm five gives precisely the listed
-  deficit-five and deficit-seven patterns.  The disconnected `-3/2` pattern
-  is removed separately.
+  classification gives the two connected patterns in the note.  Old-line
+  vector sums then force an even number of half-integral points on each old
+  line.  The deficit identity bounds all possible supporting points and
+  contradicts the pencil through either pattern.
+* **Unbalanced bipartite arithmetic.** For `a!=b`, the fractional denominator
+  divides both 20 and `a-b`.  Denominator four is excluded modulo eight and
+  denominator two by the old-line argument.  Denominators five and ten force
+  parts `5+15`; the two possible deficit profiles are checked directly from
+  the two global identities, and their root degree sums are impossible.  The
+  denominator argument deliberately does not cover `a=b=10`.
 
 No step in this audit turns the conditional 137-line result into an existence
 or nonexistence proof for a plane of order twelve.

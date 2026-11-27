@@ -104,7 +104,9 @@ def main():
     raw = locally_consistent = easy = certified = cut_sizes = 0
     smallest_slack = None
     used = set()
+    all_histograms = []
     for hist in histograms():
+        all_histograms.append(hist)
         raw += 1
         gaps = {t: list(gap_profiles(hist, t)) for t in hist}
         if any(not profiles for profiles in gaps.values()):
@@ -154,9 +156,16 @@ def main():
     assert used == set(CERTIFICATES)
     assert (raw, locally_consistent, easy, certified) == (127, 101, 72, 29)
     assert cut_sizes == 3502 and smallest_slack == 284
+    assert max(h.get(5, 0) + h.get(7, 0) for h in all_histograms) == 8
+    assert max(h.get(7, 0) for h in all_histograms) == 3
+    assert [h for h in all_histograms if h[2] <= 75] == [
+        {2: 75, 3: 35, 5: 1},
+        {2: 70, 3: 40},
+    ]
     print("Verified 127 profiles: 72 elementary and 29 exact dual certificates.")
     print("All 3,502 possible smallest component sizes fail; minimum slack 284.")
     print("Every surviving light graph is connected; every root-order lower bound exceeds 19.")
+    print("The half-integral support and 5+15 root profile bounds also pass.")
 
 
 if __name__ == "__main__":

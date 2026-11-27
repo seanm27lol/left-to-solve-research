@@ -20,18 +20,12 @@ Moreover,
 * in the bipartite case `H` has 20 or 21 vertices, and the 21-vertex case is
   impossible.
 
-If the remaining 20-vertex root is nonbipartite, the residual coordinates of
-every point are binary except possibly for deficit-five and deficit-seven
-points.  The exceptional coordinate patterns are completely determined:
-
-* deficit five has five coordinates `-1/2` and fifteen coordinates `1/2`;
-* deficit seven has four coordinates `-1/2`, one coordinate `3/2`, and fifteen
-  coordinates `1/2`.
-
-Consequently every 137-line seed extends to a plane unless either the root is
-bipartite on 20 vertices or at least one of these two half-integral patterns
-occurs.  This is the precise new obstruction below the completed 138-line
-case.
+The apparent half-integral exceptions in the nonbipartite case cannot occur.
+The unbalanced 20-vertex bipartite cases cannot obstruct completion either.
+Consequently every 137-line seed extends to a plane unless its light graph is
+the line graph of a connected bipartite graph with parts of size ten and ten.
+This balanced root is the precise remaining obstruction below the completed
+138-line case.
 
 ## Deficits and the exact finite certificate
 
@@ -127,13 +121,79 @@ vector is the all-ones vector and
 Integral coordinates are binary because every integer `u` satisfies
 `u(u-1)>=0`.  In the half-integral case write `w=z+(1/2)1`.  The displayed
 identity gives `||z||^2=5`.  Since deficits are at most eight, the only
-possibilities are the two patterns stated above.  The other norm-five pattern
-for deficit seven contains a coordinate `-3/2`; no root edge can meet that
-coordinate while keeping every edge sum in `{0,1}`, contradicting
-connectedness.
+connected possibilities are:
 
-Binary coordinates supply twenty new lines exactly as in the 138- and
-139-line arguments.  The unresolved work is therefore concrete: eliminate
-the 20-vertex bipartite root, and eliminate the two half-integral patterns in
-the nonbipartite root.
+* deficit five: five coordinates `-1/2` and fifteen coordinates `1/2`;
+* deficit seven: four coordinates `-1/2`, one coordinate `3/2`, and fifteen
+  coordinates `1/2`.
+
+The other norm-five pattern for deficit seven contains a coordinate `-3/2`;
+no root edge can meet that coordinate while keeping every edge sum in
+`{0,1}`, contradicting connectedness.
+
+The two displayed patterns are also impossible.  The vector sum on every old
+line equals the all-ones vector, so every old line contains an even number of
+strictly half-integral point vectors.  A deficit-five point lies on eight old
+lines.  Those lines require eight distinct additional half-integral points,
+whereas
+
+\[
+ 15n_5+35n_7\leq\sum_x t_x(t_x-2)=120
+\]
+
+allows at most eight points of deficits five and seven in total.  If there is
+no half-integral deficit-five point, a half-integral deficit-seven point and
+its six old lines require at least seven such points, while `35n_7<=120`
+gives `n_7<=3`.  Thus every point vector is integral, hence binary, in the
+nonbipartite case.
+
+## The unbalanced bipartite roots
+
+Let a bipartite root have parts of sizes `a,b`, with `a+b=20`, and put
+`d=a-b`.  Write `u` for the vector which is one on the first part and minus
+one on the second.  The edge span is `u^perp`.  The projection and norm of the
+residual sum vector permit a choice of the last coordinate for which that sum
+vector is again the all-ones vector.
+
+Every point vector then has the form
+
+\[
+ w=z+\alpha u,\qquad z\in\mathbb Z^{20}.
+\]
+
+If `d` is nonzero and `alpha=p/q` is reduced modulo the integers, the integral
+sum and norm of `w` imply
+
+\[
+ q\mid d,\qquad q\mid20.
+\]
+
+Indeed `d alpha` is integral, and reducing
+`q^2||w||^2=sum_i(qz_i+/-p)^2` modulo `q` gives `q|20`.  A denominator two is
+excluded by the old-line parity argument above.  A denominator four would
+make the twenty coordinates of `4w` odd, so their squared sum is `4 mod 8`,
+whereas `16||w||^2` is zero modulo eight.
+
+The only remaining nonintegral denominators are five or ten.  They force
+`|d|=10`, so the root parts have sizes five and fifteen and its number `m` of
+edges is at most 75.  The two deficit identities then leave only
+
+\[
+ (n_2,n_3,n_5)=(75,35,1),\qquad (n_2,n_3)=(70,40).
+\]
+
+For `m=70`, every light has twelve heavy gap neighbors, so the line graph is
+12-regular.  Every root edge therefore has endpoint-degree sum 14.  A
+connected bipartite root is semiregular, but 70 is not divisible by the
+15-vertex part.  For `m=75`, the root must be `K_{5,15}`, whose line graph is
+18-regular; the local deficit equation instead gives light degrees 12 or 14.
+Both cases are impossible.
+
+Therefore every unbalanced bipartite root either has integral point vectors,
+which are binary, or is impossible.  Binary coordinates supply twenty new
+lines exactly as in the 138- and 139-line arguments.  The sole unresolved
+case is a connected bipartite root with parts of size ten and ten.  In that
+balanced case the edge span has an orthogonal direction which is also
+orthogonal to the all-ones vector, so the preceding denominator argument does
+not control its scalar coordinates.
 
