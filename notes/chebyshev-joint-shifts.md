@@ -56,6 +56,21 @@ Indeed write $j=t j'$, $k=t k'$, $m=t m'$, $u=t^2u'$, $h=t h'$. In the case $J=0
 $$m'^3\mid Zvt^2u'h'^2(3m'd-2tu').$$
 Every odd prime $\ell\mid m'$ is coprime to $u'h'$. If $v_\ell(m')>v_\ell(t)$ then the last factor has valuation exactly $v_\ell(t)$. If $v_\ell(m')\le v_\ell(t)$, then the $\ell$-part of $m'^3$ divides $t^3$. At 2, $t$ is odd and the argument above applies to $j',k'$. Thus $m'^3\mid 8Zv t^3$, or $m^3\mid 8Zv t^6$, proving the displayed bound. In particular the $O(v^{15/4})$ conclusion also holds when $t$ stays bounded and $h=O(v^{3/4})$.
 
+## The joint estimate for every Chebyshev candidate
+
+When both top positive shifts are imposed, the [largest-pair bound](chebyshev-prime-gaps.md) gives $d<b<4h^6$. The following bound holds for every candidate in this interval with $v\ge64$:
+$$
+d<\max\{48g v^2,18\sqrt{g v^5(v+h^2)},13500v^3\}.
+$$
+Thus $h=o(v)$ implies $d=o(v^4)$ as $v\to\infty$. In particular, $h=O(v^{3/4})$ gives $d=O(v^{15/4})$ for every such candidate.
+
+Only $J=0$ needs proof. The exact equation for $J$ gives
+$$
+\frac{u h^2}{m^3}\left(3+\frac{u}{M}\right)
+=\frac{g/Z+v-1+1/M}{v}<2
+$$
+since $g\le v-2$, $Z\ge1$, and $M\ge1$. In particular $u h^2/m^3<2/3$. If $k\le m/4$ and $k\ge5$, then $u h^2/m^3=k(1-k/m)(1-2k/m)^2\ge3k/16>2/3$. If $k=1$ or $3$, this quantity is at least $(61/64)(58/64)^2>2/3$ because $m>v\ge64$. These exhaust the odd possibilities, so $k>m/4$. Since $k<m/2$ we have $u=k(m-k)>3m^2/16$. Thus $h^2<32m/9<15v$, giving $d<4(15v)^3$ as claimed. The certificate below covers every smaller middle gap.
+
 ## Certificate for every even middle gap at most 500
 
 The signed identity and $d+1\mid n-1$ alone imply $a-e\ge502$ in this interval. The proof uses the two divisors in [the previous middle-gap reduction](chebyshev-prime-gaps.md). For $T=(j+2)(k+2)$,
