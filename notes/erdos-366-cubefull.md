@@ -35,6 +35,62 @@ g++ -std=c++17 -O3 checks/erdos366_direct_sort.cpp -o /tmp/direct-cubefull
 /tmp/direct-cubefull
 ```
 
+## At least three prime divisors
+
+**Lemma by Sean Mahdavian (`@seanm27lol`) with OpenAI Codex assistance.**
+
+Every positive consecutive cubefull pair satisfies
+
+\[
+ \omega(n(n+1))\geq 3.
+\]
+
+In particular its product has at least two distinct odd prime divisors.  This
+restriction is uniform and needs no search bound.
+
+To prove it, first note that `n=1` is impossible because `2` is not cubefull.
+If the product had at most two prime divisors, coprimality and positivity would
+force
+
+\[
+ n=p^a,\qquad n+1=q^b
+\]
+
+for distinct primes `p,q` and exponents `a,b>=3`.  Exactly one of the bases is
+two.
+
+If `q=2`, then `2^b=p^a+1`.  Reduction modulo eight makes `a` odd.  But
+
+\[
+ \frac{p^a+1}{p+1}=p^{a-1}-p^{a-2}+\cdots-p+1
+\]
+
+is an odd integer greater than one dividing a power of two, a contradiction.
+If `p=2`, then `q^b-1=2^a`.  An odd `b` is impossible because
+`1+q+...+q^{b-1}` would again be an odd divisor greater than one of a power of
+two.  Write `b=2c`.  The two factors
+
+\[
+ (q^c-1)(q^c+1)=2^a
+\]
+
+are powers of two differing by two, hence are two and four.  This gives
+`q^c=3`, impossible because `c>=2`.
+
+For the normalized Mordell point constructed in reduction R3, every prime in
+`n(n+1)` divides the coordinate `z`: the odd coefficient primes are moved into
+`z`, and `32 | D z^3` with cube-free `D` forces `2 | z`.  Thus `z` is divisible
+by two distinct odd primes in addition to two.  This substantially narrows
+both the local search and any future factor-allocation argument, but it does
+not prove that no pair exists.
+
+As an independent audit, Mihăilescu's theorem also excludes the two-prime
+case.  Preda Mihăilescu receives credit for that theorem; Yao Xu
+(`@cadamcat`) has a kernel-checked Lean 4 formalization at commit
+`4bf1f742eb341decbdfc59ec56e1616f4d13e33b`.  The elementary proof above is
+used here so that this result does not depend on a different Lean or Mathlib
+revision.
+
 ## A restriction valid at every height
 
 Write $4n(n+1)=D Z^3$, where $D$ is cube-free. For any candidate define
