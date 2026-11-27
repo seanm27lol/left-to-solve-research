@@ -12,6 +12,29 @@ Every even cubefull integer is divisible by eight. An odd cubefull integer can t
 
 The first independent check enumerates all exponents by ordinary prime divisibility for $T=10^3,10^5,10^6$. A separate unrestricted traversal of $a^3b^4c^5$ putting all outputs in a Python set directly counts neighbors at these levels and at $T=10^{12},10^{15}$.
 
+The full run with $T=10^{26}$ produced the following exact counts. Thus any positive witness has $n>10^{26}$. This goes one order of magnitude beyond the previously cited range for the narrower cubefull-to-cubefull variant.
+
+| Quantity | Count |
+| --- | ---: |
+| Distinct admissible $(b,c)$ | 5,259,863 |
+| Cubefull terms through $10^{26}+1$ | 2,144,335,391 |
+| Even terms | 1,516,537,298 |
+| Eligible odd terms mapped to possible even neighbors | 314,133,319 |
+| Even terms reaching the exact comparison list | 97,580,327 |
+| Consecutive pairs | 0 |
+
+A separate direct sort of 15,639,672 unrestricted products through $10^{19}+1$ gives 9,718,457 distinct terms and zero pairs. The canonical enumeration and the direct sort agree on the full distinct count. As a positive control, adding artificial odd endpoints 63 and 65 to a small run recovers both neighbors of 64.
+
+Run from the certificate directory:
+
+```sh
+g++ -std=c++17 -O3 checks/consecutive_cubefull.cpp -o /tmp/check-cubefull
+/tmp/check-cubefull 26
+python3 checks/erdos366_crosscheck.py
+g++ -std=c++17 -O3 checks/erdos366_direct_sort.cpp -o /tmp/direct-cubefull
+/tmp/direct-cubefull
+```
+
 ## A restriction valid at every height
 
 Write $4n(n+1)=D Z^3$, where $D$ is cube-free. For any candidate define
@@ -25,5 +48,3 @@ Thus $2n+1\le125D^5$ by integrality. In particular $n<2\cdot 10^{19}$, already i
 One can also exclude infinitely many pairs of cube-free coefficients directly. Write $n=A x^3$, $n+1=B y^3$ with $A,B$ cube-free. The cubefull conditions are equivalent to $\operatorname{rad}(A)\mid x$ and $\operatorname{rad}(B)\mid y$. Bennett's uniqueness theorem for $|A x^3-B y^3|=1$ shows that $|A-B|=1$ is impossible for a candidate: $(1,1)$ already solves that equation, and at least one of $A,B$ has a prime divisor. More generally, any one explicit solution of the same absolute-value equation failing the radical divisibilities rules out the entire coefficient pair, at every height. [Bennett, 2001, Theorem 1.1](https://personal.math.ubc.ca/~bennett/B-Crelle2.pdf).
 
 The unresolved instance permits arbitrarily large $n$ and $D$ and need not have neighboring cube-free coefficients.
-
-[Exact C++ search](../checks/consecutive_cubefull.cpp) · [Independent cross-checks](../checks/erdos366_crosscheck.py).

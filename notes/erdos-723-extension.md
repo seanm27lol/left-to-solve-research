@@ -34,7 +34,7 @@ These 12 vertices, together with $x$, give a clique of 13 vertices in $D$. Its p
 
 ## Consequence for the open problem
 
-Iteration completes any configuration of 143 lines with these properties to a plane of 157 lines. At 157 lines all points have degree 13, so any two points are on one of the lines by counting. Conversely, any order-12 plane gives a 143-line configuration by deleting 14 lines. The existence or impossibility of the 143-line seed, the catalog's H1, remains to be proved. The argument here gives a paper proof of H2. No Lean certificate is supplied.
+Iteration completes any configuration of 143 lines with these properties to a plane of 157 lines. At 157 lines all points have degree 13, so any two points are on one of the lines by counting. Conversely, any order-12 plane gives a 143-line configuration by deleting 14 lines. The existence or impossibility of the 143-line seed, the catalog's H1, remains to be proved. The argument here gives a paper proof of H2. The final incidence and extension argument has yet to be formalized.
 
 ## Smaller seeds: 140, 141 and 142 lines
 
