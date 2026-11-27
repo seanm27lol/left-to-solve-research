@@ -1,0 +1,1 @@
+'PlaneTwelve.BinaryGrid.three_rows_or_columns' depends on axioms: [propext, Classical.choice, Quot.sound]
