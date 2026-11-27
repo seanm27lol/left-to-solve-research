@@ -122,3 +122,5 @@ Integrality and the opposite parity of $pr$ and $us$ give $pr<us$. Each prime $q
 Shnoudi reports exclusions through $t=16$ with three odd primes at arbitrary exponents and through $t=20$ when all exponents are two. Theorem 9.6 also reports a calculation excluding the latter case at any level when the largest-prime component quotient is at most 500,000. The spacing bounds above allow that quotient to grow and leave sufficiently dispersed primes open. The companion note gives congruences involving $p+1,r+1,s+1$. [Congruences](almost-perfect-prime-congruences.md). [Shnoudi, October 2026, Theorems 7.8 and 9.6](https://doi.org/10.5281/zenodo.23674490).
 
 Run `python checks/almost_perfect_prime_spacing.py` with SymPy 1.14 to verify the polynomial identities and constants used above.
+
+The [component audit](almost-perfect-component-audit.md) gives the subsequent restrictions on quotient divisors, even-level splits and the gap between the top two primes.
