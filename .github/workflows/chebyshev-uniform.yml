@@ -1,0 +1,23 @@
+name: Verify the uniform Chebyshev resultant
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'checks/chebyshev_uniform_overlap.py'
+      - '.github/workflows/chebyshev-uniform.yml'
+  pull_request:
+    paths:
+      - 'checks/chebyshev_uniform_overlap.py'
+      - '.github/workflows/chebyshev-uniform.yml'
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install sympy==1.14.0
+      - run: python checks/chebyshev_uniform_overlap.py
