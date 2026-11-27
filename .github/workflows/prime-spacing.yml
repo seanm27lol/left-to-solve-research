@@ -1,0 +1,40 @@
+name: Verify prime spacing and the tenth shift ratio
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'checks/chebyshev_ratio_ten.py'
+      - 'checks/chebyshev_small_shift_ratios.py'
+      - 'checks/chebyshev_prime_gaps.py'
+      - 'checks/chebyshev_middle_gap.py'
+      - 'checks/chebyshev_small_top_gaps.cpp'
+      - 'checks/almost_perfect_prime_spacing.py'
+      - '.github/workflows/prime-spacing.yml'
+  pull_request:
+    paths:
+      - 'checks/chebyshev_ratio_ten.py'
+      - 'checks/chebyshev_small_shift_ratios.py'
+      - 'checks/chebyshev_prime_gaps.py'
+      - 'checks/chebyshev_middle_gap.py'
+      - 'checks/chebyshev_small_top_gaps.cpp'
+      - 'checks/almost_perfect_prime_spacing.py'
+      - '.github/workflows/prime-spacing.yml'
+permissions:
+  contents: read
+jobs:
+  certificates:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install sympy==1.14.0
+      - run: python checks/chebyshev_ratio_ten.py
+      - run: python checks/chebyshev_prime_gaps.py
+      - run: python checks/chebyshev_middle_gap.py
+      - name: Verify the top prime gaps through 24
+        run: |
+          g++ -std=c++17 -O2 -Wall -Wextra -Werror checks/chebyshev_small_top_gaps.cpp -o /tmp/chebyshev-top-gaps
+          /tmp/chebyshev-top-gaps
+      - run: python checks/almost_perfect_prime_spacing.py
