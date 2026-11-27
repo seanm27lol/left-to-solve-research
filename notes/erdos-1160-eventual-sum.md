@@ -23,3 +23,34 @@ Yinan Li and Youming Qiao's [concurrent preprint](https://arxiv.org/abs/2610.145
 Subtracting the preceding level gives \(\log_2(a_m/a_{m-1})=\tfrac29m^2+O(m)\). Thus \(a_m\) eventually increases and \(m a_{m-1}=o(a_m)\). Accounting separately for the fixed initial segment yields \(\sum_{j<m}a_j=o(a_m)\). At \(x=2^m\), the class-two 2-groups form a subset of all the 2-groups counted by \(\sum_{j\le m} a_j\). Their density therefore implies \(\sum_{j\le m}a_j/F(2^m)\to1\). Hence \(F(2^m)\sim a_m\), implying the same eventual strict inequality.
 
 These deductions check the implication from each preprint. They do not independently verify either preprint's full enumeration argument, provide an explicit onset for the inequality, or prove the stronger pointwise Erdős–Higman conjecture at every exponent.
+
+## Exact status of the formal gap
+
+Version 3, Corollary 15.11 of Li and Qiao already states the normalization
+needed here:
+
+\[
+ \frac{F(2^m-1)}{g(2^m)}\longrightarrow0,
+\]
+
+and explicitly draws the eventual strict inequality.  Thus the remaining
+Lean gap is not an asymptotic manipulation; it is the paper's group-enumeration
+theorem itself.  Public searches found no Lean formalization of that input.
+Mathematical credit for the solved asymptotic target belongs to Yinan Li and
+Youming Qiao.
+
+Two small formal interfaces remain useful and are isolated for the next
+kernel-checked pass:
+
+1. prove `0 < Erdos1160.g n` for positive `n` by exhibiting the cyclic group
+   `Multiplicative (ZMod n)` in the finite isomorphism-class table already used
+   by the prepared direct-product proof;
+2. prove the generic order-limit lemma which turns
+   `Tendsto (fun m => ((sum_{1 <= n < 2^m} g n : Nat) : Real) /
+   g (2^m)) atTop (nhds 0)` and eventual positivity into the exact eventual
+   strict inequality.
+
+The second item is a short application of `tendsto_order` and `div_lt_one`.
+Neither item substitutes for Corollary 15.11.  Until that enumeration theorem
+is formalized, the catalog target has a published mathematical proof but not
+an end-to-end kernel-checked proof in the pinned environment.
