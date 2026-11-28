@@ -1,0 +1,5 @@
+'Erdos366PowerTwo.mersenne_largest_prime' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos366PowerTwo.mersenne_wieferich_witness' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos366PowerTwo.plus_wieferich_witness' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos366PowerTwo.fermat_prime_square_dvd' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos366PowerTwo.exclude_smooth_mersenne' depends on axioms: [propext, Classical.choice, Quot.sound]

@@ -1,0 +1,3 @@
+'Erdos366PrimeBlocks.prime_block_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos366PrimeBlocks.prime_block_bound_coarse' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos366PrimeBlocks.no_dominant_odd_prime_power' depends on axioms: [propext, Classical.choice, Quot.sound]

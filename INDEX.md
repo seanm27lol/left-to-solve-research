@@ -60,7 +60,7 @@ Each entry links to its catalog page and the research note that treats it. Sever
 | [oeis-a335407](https://lefttosolve.com/p/oeis-a335407) | A335407: Number of anti-run permutations of the prime indices of n!. | [Read](notes/07-sequences.md) |
 | [oeis-a182084](https://lefttosolve.com/p/oeis-a182084) | A182084: a(n) = 3*n - n/p, where p is the smallest prime dividing n. | [Read](notes/09-extremal.md) |
 
-## Earlier answer or theorem (26)
+## Earlier answer or theorem (27)
 
 | Catalog entry | Question | Research notes |
 |---|---|---|
@@ -90,8 +90,9 @@ Each entry links to its catalog page and the research note that treats it. Sever
 | [WrittenOnTheWallII.GraphConjecture372.conjecture372](https://lefttosolve.com/p/WrittenOnTheWallII.GraphConjecture372.conjecture372) | Written on the Wall II - Conjecture 372 | [Read](notes/13-open-graphs.md) |
 | [Erdos156.erdos_156](https://lefttosolve.com/p/Erdos156.erdos_156) | Erdős Problem 156 | [Read](notes/15-open-extremal.md) |
 | [Erdos742.erdos_742](https://lefttosolve.com/p/Erdos742.erdos_742) | Murty-Simon Conjecture | [Read](notes/15-open-extremal.md) |
+| [Erdos1160.erdos_1160.variants.sum](https://lefttosolve.com/p/Erdos1160.erdos_1160.variants.sum) | Erdős 1160 — eventual sum inequality | [Read](notes/erdos-1160-eventual-sum.md) |
 
-## Partial result (9)
+## Partial result (11)
 
 | Catalog entry | Question | Research notes |
 |---|---|---|
@@ -104,4 +105,6 @@ Each entry links to its catalog page and the research note that treats it. Sever
 | [AlmostPerfectNumbers.exists_almost_perfect_not_power_of_two](https://lefttosolve.com/p/AlmostPerfectNumbers.exists_almost_perfect_not_power_of_two) | Non-Power-of-2 Almost Perfect Numbers Conjecture. | [Read](notes/16-open-sequences.md) |
 | [MagicSquares.exists_magic_square_squares](https://lefttosolve.com/p/MagicSquares.exists_magic_square_squares) | Magic Squares — exists magic square squares | [Read](notes/16-open-sequences.md) |
 | [mse-2615963](https://lefttosolve.com/p/mse-2615963) | A congruence involving Chebyshev polynomials | [Read](notes/17-chebyshev.md) |
+| [Erdos723.erdos_723.variants.eq_12](https://lefttosolve.com/p/Erdos723.erdos_723.variants.eq_12) | Erdős 723 — projective plane of order 12 | [Read](notes/erdos-723-ternary-code.md) |
+| [Erdos366.erdos_366.variants.weaker](https://lefttosolve.com/p/Erdos366.erdos_366.variants.weaker) | Erdős 366 — consecutive cubefull integers | [Three-support](notes/erdos-366-three-support.md); [second-order congruences](notes/erdos-366-second-order.md); [four-support](notes/erdos-366-four-support.md); [power-of-two singleton](notes/erdos-366-two-power-singleton.md); [prime-exponent sieve](notes/erdos-366-mersenne-three-support-sieve.md); [two-plus-two split](notes/erdos-366-two-plus-two.md); [2+2 gcd completion](notes/erdos-366-two-plus-two-gcd-completion.md) |
 

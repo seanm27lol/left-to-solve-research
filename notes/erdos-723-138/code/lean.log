@@ -1,0 +1,3 @@
+'PlaneTwelve.Ternary.weight_ge_fourteen' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PlaneTwelve.Ternary.no_disjoint_pair_in_24' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PlaneTwelve.Ternary.no_disjoint_orthogonal_in_24' depends on axioms: [propext, Classical.choice, Quot.sound]
