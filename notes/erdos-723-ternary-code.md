@@ -163,6 +163,64 @@ be the number of 5-secants through (P). Then
 Cauchy's inequality gives (2500\le17\cdot140=2380), a contradiction.
 Consequently only four weight-21 multiplicity patterns remain.
 
+### Complete exclusion of weight 21
+
+Restore the full line profiles. Since (Az=4x-\mathbf1), the sum of (z)
+on a line is (3), (-5), or (-1), according as its coefficient in (x)
+is (+1), (-1), or (0). There are respectively (9), (12), and
+(136) lines of these classes.
+
+For each multiplicity pattern, enumerate all profiles ((c_v)_{v\ne0})
+with (sum_vc_v\le13) and (sum_vvc_v\in\{3,-5,-1\}). Point and
+unique-pair counting require
+
+\[
+ \sum_Lc_v(L)=13n_v,\quad
+ \sum_L\binom{c_v(L)}2=\binom{n_v}2,\quad
+ \sum_Lc_v(L)c_w(L)=n_vn_w.
+\]
+
+For the patterns
+
+\[
+ -1^{19},1^2,2^2;\qquad -1^{20},1^5,2;\qquad
+ -2,-1^{17},1^4,2,
+\]
+
+these exact systems have integer Farkas certificates. In the verifier's
+constraint order (three line-class counts, incidences by sorted value,
+equal-value pairs, then unequal-value pairs lexicographically), they are
+
+\[
+\begin{array}{c|c|c}
+(-1^{19},1^2,2^2)&(4,0,4,-4,-4,-4,2,-4,4,3,2,4)&-68\\
+(-1^{20},1^5,2)&(-3,45,45,-45,3,-45,18,-2,-45,12,27,45)&-92\\
+(-2,-1^{17},1^4,2)&(21,-15,-15,-12,15,-21,-48,-48,-6,14,-48,0,48,48,6,12,48)&-276.
+\end{array}
+\]
+
+Each certificate pairs nonnegatively with every admissible profile column
+and negatively with the required right-hand side.
+
+For the last pattern, (-1^{21},1^8), every positive selected line has
+(z)-sum (3), so it contains at least three of the eight (+1)-points.
+The nine positive lines use at least (9\binom32=27) of their
+(inom82=28) pairs. Pair uniqueness forces nine triples covering all but
+one pair. At any of the six points outside the missing pair, all seven
+incident pairs would be partitioned two at a time by the triples through
+that point, impossible because seven is odd.
+
+The standard-library verifier
+`python3 scripts/verify_erdos723_weight21_profiles.py` checks the profile
+enumeration and certificates. Hence
+
+\[
+ \boxed{\text{the ternary dependency code has no word of weight }21.}
+\]
+
+This closes the weight-21 branch only; it does not construct or rule out a
+projective plane of order (12).
+
 ## The weight-24 minimum branch
 
 Assume now that (d(K)=24). Fix two lines (L,M), their intersection
@@ -254,9 +312,8 @@ literature priority.
 
 A full solution must now do at least one of the following:
 
-1. eliminate the weight-24 minimum branch;
-2. eliminate the four surviving weight-21 patterns; or
-3. refute every one of the five weight-18 PBD/exact-cover cases (t=0,\ldots,4\).
+1. eliminate the weight-24 minimum branch; or
+2. refute every one of the five weight-18 PBD/exact-cover cases (t=0,\ldots,4\).
 
 The earlier 137-line completion theorem is independent: it proves that a
 137-line seed would extend, while this note attacks what a full plane's
