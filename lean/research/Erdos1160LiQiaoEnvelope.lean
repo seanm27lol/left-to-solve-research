@@ -1,8 +1,11 @@
 import Mathlib.Algebra.BigOperators.Intervals
 import Mathlib.Analysis.SpecialFunctions.Exp
+import Mathlib.Analysis.SpecialFunctions.Gaussian.PoissonSummation
 import Mathlib.Tactic
 
 open Filter Topology
+open scoped Real
+open Asymptotics
 
 namespace LiQiaoCor1511
 
@@ -81,5 +84,86 @@ theorem dyadic_prefix_envelope (a : ℕ → ℝ) {C : ℝ} (hC : 1 ≤ C)
       rw [mul_div_assoc, ← Real.exp_sub]
       congr 2
       ring
+
+/-- The Gaussian envelope left after the adjacent-exponent calculation tends
+to zero.  This is the analytic decay step in the proof of Li--Qiao v3,
+Corollary 15.11, isolated from their enumeration estimate (160). -/
+theorem envelope_tail_real (C : ℝ) :
+    Tendsto (fun x : ℝ => x * Real.exp (Real.log 2 *
+      (Q (x - 1) + C * (x - 1) - Q x))) atTop (𝓝 0) := by
+  have hlog : 0 < Real.log 2 := Real.log_pos (by norm_num)
+  have hquad : (-2 / 9 : ℝ) * Real.log 2 < 0 :=
+    mul_neg_of_neg_of_pos (by norm_num) hlog
+  have hsmall := rexp_neg_quadratic_isLittleO_rpow_atTop hquad
+    (((10 / 9 : ℝ) + C) * Real.log 2) (-2)
+  have hlinear : (fun x : ℝ => x) =O[atTop] (fun x : ℝ => x) :=
+    isBigO_refl _ _
+  have hproduct := hsmall.mul_isBigO hlinear
+  have hproduct' : (fun x : ℝ =>
+      x * Real.exp (((-2 / 9 : ℝ) * Real.log 2) * x ^ 2 +
+        (((10 / 9 : ℝ) + C) * Real.log 2) * x)) =o[atTop]
+      (fun x : ℝ => x⁻¹) := by
+    apply hproduct.congr'
+    · exact Filter.Eventually.of_forall (fun x => by ring)
+    · filter_upwards [eventually_gt_atTop (0 : ℝ)] with x hx
+      rw [Real.rpow_neg (le_of_lt hx), Real.rpow_two]
+      field_simp
+  have ht : Tendsto (fun x : ℝ =>
+      x * Real.exp (((-2 / 9 : ℝ) * Real.log 2) * x ^ 2 +
+        (((10 / 9 : ℝ) + C) * Real.log 2) * x)) atTop (𝓝 0) :=
+    hproduct'.tendsto_zero_of_tendsto tendsto_inv_atTop_zero
+  have hmul : Tendsto (fun x : ℝ =>
+      Real.exp (Real.log 2 * (-(14 / 27 : ℝ) - C)) *
+        (x * Real.exp (((-2 / 9 : ℝ) * Real.log 2) * x ^ 2 +
+          (((10 / 9 : ℝ) + C) * Real.log 2) * x))) atTop (𝓝 0) := by
+    simpa using
+      (tendsto_const_nhds.mul ht : Tendsto (fun x : ℝ =>
+        Real.exp (Real.log 2 * (-(14 / 27 : ℝ) - C)) *
+          (x * Real.exp (((-2 / 9 : ℝ) * Real.log 2) * x ^ 2 +
+            (((10 / 9 : ℝ) + C) * Real.log 2) * x))) atTop
+        (𝓝 (Real.exp (Real.log 2 * (-(14 / 27 : ℝ) - C)) * 0)))
+  convert hmul using 1
+  funext x
+  unfold Q
+  have hexp :
+      Real.log 2 *
+        ((2 / 27 : ℝ) * (x - 1) ^ 3 - (4 / 9 : ℝ) * (x - 1) ^ 2 +
+          C * (x - 1) - ((2 / 27 : ℝ) * x ^ 3 - (4 / 9 : ℝ) * x ^ 2)) =
+      Real.log 2 * (-(14 / 27 : ℝ) - C) +
+        (((-2 / 9 : ℝ) * Real.log 2) * x ^ 2 +
+          (((10 / 9 : ℝ) + C) * Real.log 2) * x) := by ring
+  rw [hexp, Real.exp_add]
+  ring
+
+/-- The same Gaussian decay along the natural-number indices. -/
+theorem envelope_tail_nat (C : ℝ) :
+    Tendsto (fun m : ℕ => (m : ℝ) * Real.exp (Real.log 2 *
+      (Q ((m : ℝ) - 1) + C * ((m : ℝ) - 1) - Q m))) atTop (𝓝 0) := by
+  exact (envelope_tail_real C).comp tendsto_natCast_atTop_atTop
+
+/-- Under the global two-sided form of the Li--Qiao equation-(160) envelope,
+the entire preceding dyadic sum is negligible compared with its final term.
+
+This theorem formalizes the analytic limit after (160).  It does not supply
+the group-enumeration estimate itself, the reduction from all groups to
+2-groups, or the finite-prefix normalization needed when an envelope is
+initially stated only eventually. -/
+theorem dyadic_prefix_ratio_tendsto_zero (a : ℕ → ℝ) {C : ℝ} (hC : 1 ≤ C)
+    (ha : ∀ k, 0 ≤ a k)
+    (hupper : ∀ k, a k ≤ Real.exp (Real.log 2 * (Q k + C * k)))
+    (hlower : ∀ m : ℕ, Real.exp (Real.log 2 * Q m) ≤ a m) :
+    Tendsto (fun m : ℕ => (∑ k ∈ Finset.range m, a k) / a m)
+      atTop (𝓝 0) := by
+  refine squeeze_zero (g := fun m : ℕ => (m : ℝ) * Real.exp (Real.log 2 *
+      (Q ((m : ℝ) - 1) + C * ((m : ℝ) - 1) - Q m))) ?_ ?_
+        (envelope_tail_nat C)
+  · intro m
+    exact div_nonneg (Finset.sum_nonneg fun k _ => ha k)
+      ((Real.exp_pos _).le.trans (hlower m))
+  · intro m
+    rcases m with _ | m
+    · simp
+    · exact dyadic_prefix_envelope a hC (Nat.succ_pos _)
+        ha hupper (hlower (m + 1))
 
 end LiQiaoCor1511

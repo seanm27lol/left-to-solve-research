@@ -308,6 +308,92 @@ This is another finite residual target. It is recorded as an independently
 derived restriction in the Hall--Wilkinson framework, not as a claim of
 literature priority.
 
+### Exact line-profile reduction at weight 24
+
+The noncanonical weight-24 branch admits a finite reduction parallel to the
+weight-21 endgame.  Let (x) have (a) coefficients (+1) and (b)
+coefficients (-1), put (s=a-b), and write
+(A^{\mathsf T}x=3z).  From (AA^{\mathsf T}=12I+J),
+
+\[
+ \|z\|^2=32+\frac{s^2}{9},\qquad
+ \sum z_i=\frac{13s}{3},\qquad
+ Az=4x+\frac{s}{3}\mathbf1.
+\]
+
+The only sign splits not already excluded are ((9,15)) and ((12,12)).
+Orienting the first with (s=-6), these identities give respectively
+
+\[
+ (\sum z_i,\|z\|^2)=(-26,36),\qquad (0,32).
+\]
+
+For a noncanonical word the binary vector (z\bmod2) is a nonzero hull
+word.  Its weight is divisible by four, is at least 14, and is at most
+(\|z\|^2).  Exact integer enumeration therefore leaves 12 possible
+multiplicity patterns in the ((9,15)) split and 32 in the balanced split.
+
+For each pattern enumerate every line profile ((c_v)_{v\ne0}), with at
+most 13 nonzero entries, whose weighted sum is the required line sum.  Those
+line sums and class sizes are
+
+\[
+\begin{array}{c|c}
+(9,15)&2^9,(-6)^{15},(-2)^{133},\\
+(12,12)&4^{12},(-4)^{12},0^{133}.
+\end{array}
+\]
+
+As before, point and unique-pair counting impose
+
+\[
+ \sum_Lc_v(L)=13n_v,\quad
+ \sum_L\binom{c_v(L)}2=\binom{n_v}2,\quad
+ \sum_Lc_v(L)c_w(L)=n_vn_w.
+\]
+
+Exact integer Farkas certificates make 38 of the 44 systems infeasible.
+One more pattern has a direct pencil contradiction.  For
+(z=(-2)^2,(-1)^{24},2), every positive selected line must contain the
+unique (+2) point and no other nonzero point.  That point lies on nine
+positive and three negative selected lines.  The two (-2) points lie on six
+negative selected lines each, and the 24 points of value (-1) lie on three
+each.  These incidences already account for all
+
+\[
+ \binom32+2\binom62+24\binom32=\binom{15}2
+\]
+
+pairs of negative selected lines.  Hence a negative selected line avoiding
+the (+2) point meets the nine positive lines at nine distinct zero-points,
+leaving four places.  A sum of (-6) in those places requires both (-2)
+points and two (-1) points.  At most one line can contain both (-2)
+points, whereas twelve negative selected lines avoid the (+2) point.
+
+Consequently every noncanonical weight-24 word has, up to reversing all
+signs where applicable, one of only five point-value multisets:
+
+\[
+\boxed{
+\begin{gathered}
+ -1^{31},1^5;\\
+ -1^{15},1^{13},2;\qquad -1^{16},1^{16};\\
+ -2,-1^{12},1^{12},2;\qquad -2,-1^{13},1^{15}.
+\end{gathered}}
+\]
+
+Run `python3 scripts/verify_erdos723_weight24_profiles.py` beside the checked
+certificate asset.  The verifier uses only Python integers and the standard
+library: it regenerates all 44 norm/parity patterns and every admissible line
+profile, checks all 38 Farkas vectors column by column, and checks the pencil
+argument's finite arithmetic.
+
+This is a necessary-condition reduction, not a realization theorem.  It
+does not close the weight-24 branch or decide whether a projective plane of
+order 12 exists.  The coding framework is due to Hall--Wilkinson; this exact
+profile reduction is recorded as an independently derived specialization,
+without a literature-priority claim.
+
 ## Exact remaining obstruction
 
 A full solution must now do at least one of the following:

@@ -80,6 +80,28 @@ from the pointwise two-sided envelopes used in the paper. This source was
 kernel-checked with Lean 4.33.1 and the mathlib checkout used by pinned Formal
 Conjectures commit `9097e2f90e66d2f6244209cb1c07f7120d17ec53`.
 
+The same file now also formalizes the analytic tail after this finite bound.
+Using mathlib's Gaussian rapid-decay theorem, it proves
+
+\[
+ m\,2^{Q(m-1)+C(m-1)-Q(m)}\longrightarrow0
+\]
+
+and hence
+
+\[
+ \frac{\sum_{k<m}a_k}{a_m}\longrightarrow0
+\]
+
+under the exact global two-sided exponent-envelope hypotheses.  The three new
+declarations `envelope_tail_real`, `envelope_tail_nat`, and
+`dyadic_prefix_ratio_tendsto_zero` were kernel-checked in the pinned
+environment; `#print axioms` reports exactly `propext`, `Classical.choice`, and
+`Quot.sound`.  This closes the Gaussian-decay and prefix/last-term limit step,
+not the group-enumeration input.  The mathematical argument remains credited
+to Li and Qiao; the Lean formalization was prepared under @seanm27lol with
+Codex assistance.
+
 This does **not** prove the catalog target. Two substantive published inputs
 remain to be formalized: Li--Qiao Theorem 14.4, equation (160), giving the
 uniform two-sided estimate for \(f(p^m)\), and Corollary 15.10, giving
@@ -88,3 +110,8 @@ equation (159), attributed there to Higman Theorem 2.3 and
 Bläser--Li--Qiao--Rogovskyy Theorem 1.3 and Section 4.3. Corollary 15.10 uses
 Corollary 15.8 and Proposition 15.9, including the fixed-quotient extension
 counts and Pyber's prescribed-Sylow theorem.
+
+There is one small interface issue between an eventual big-(O) statement and
+the present global envelope: the finitely many initial indices must be absorbed
+by enlarging (C) (with (m=0) handled separately).  No asymptotic content is
+hidden in that normalization, but it is not yet formalized here.
