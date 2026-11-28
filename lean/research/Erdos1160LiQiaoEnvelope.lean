@@ -166,4 +166,90 @@ theorem dyadic_prefix_ratio_tendsto_zero (a : ℕ → ℝ) {C : ℝ} (hC : 1 ≤
     · exact dyadic_prefix_envelope a hC (Nat.succ_pos _)
         ha hupper (hlower (m + 1))
 
+/-- An eventual upper exponent envelope can be made global by enlarging its
+linear-error constant.  The value at index zero must be supplied separately,
+because the expression `Q 0 + C * 0` is independent of `C`.
+
+This is the finite-prefix normalization needed when the upper half of
+Li--Qiao equation (160) is presented in eventual big-O form. -/
+theorem eventual_upper_envelope_global (a : ℕ → ℝ) (ha0 : a 0 ≤ 1) {C : ℝ}
+    (hupper : ∀ᶠ k : ℕ in atTop,
+      a k ≤ Real.exp (Real.log 2 * (Q k + C * k))) :
+    ∃ C' : ℝ, max 1 C ≤ C' ∧
+      ∀ k, a k ≤ Real.exp (Real.log 2 * (Q k + C' * k)) := by
+  rcases (eventually_atTop.1 hupper) with ⟨N, hN⟩
+  let D : ℕ → ℝ := fun k =>
+    Real.log (max 1 (a k)) / Real.log 2 - Q k
+  let S : ℝ := ∑ k ∈ Finset.range N, max 0 (D k)
+  let C' : ℝ := max 1 C + S
+  have hS : 0 ≤ S := by
+    dsimp [S]
+    exact Finset.sum_nonneg fun _ _ => le_max_left _ _
+  have hbase : max 1 C ≤ C' := by
+    dsimp [C']
+    linarith
+  have hCnonneg : 0 ≤ C' :=
+    (show (0 : ℝ) ≤ 1 by norm_num).trans ((le_max_left 1 C).trans hbase)
+  refine ⟨C', hbase, ?_⟩
+  intro k
+  by_cases hkN : N ≤ k
+  · have hCC' : C ≤ C' := (le_max_right 1 C).trans hbase
+    refine (hN k hkN).trans (Real.exp_le_exp.mpr ?_)
+    apply mul_le_mul_of_nonneg_left _ (Real.log_nonneg (by norm_num))
+    simpa [add_comm] using add_le_add_left
+      (mul_le_mul_of_nonneg_right hCC' (Nat.cast_nonneg' k)) (Q k)
+  · have hklt : k < N := Nat.lt_of_not_ge hkN
+    rcases k with _ | k
+    · simpa [Q] using ha0
+    · have hmem : k + 1 ∈ Finset.range N := Finset.mem_range.mpr hklt
+      have hterm : max 0 (D (k + 1)) ≤ S := by
+        dsimp [S]
+        exact Finset.single_le_sum
+          (fun i hi => le_max_left 0 (D i)) hmem
+      have hD : D (k + 1) ≤ S :=
+        (le_max_right 0 (D (k + 1))).trans hterm
+      have hSC : S ≤ C' := by
+        dsimp [C']
+        have : 0 ≤ max 1 C :=
+          (show (0 : ℝ) ≤ 1 by norm_num).trans (le_max_left 1 C)
+        linarith
+      have hDC : D (k + 1) ≤ C' * (k + 1 : ℕ) := by
+        have hone : (1 : ℝ) ≤ (k + 1 : ℕ) := by
+          exact_mod_cast Nat.succ_pos k
+        have hscale : C' ≤ C' * (k + 1 : ℕ) := by
+          nlinarith
+        exact hD.trans (hSC.trans hscale)
+      have hlogpos : 0 < Real.log 2 := Real.log_pos (by norm_num)
+      have hratio :
+          Real.log (max 1 (a (k + 1))) / Real.log 2 ≤
+            Q ((k + 1 : ℕ) : ℝ) + C' * (k + 1 : ℕ) := by
+        dsimp [D] at hDC
+        have hh := (sub_le_iff_le_add).mp hDC
+        simpa [add_comm] using hh
+      calc
+        a (k + 1) ≤ max 1 (a (k + 1)) := le_max_right _ _
+        _ = Real.exp (Real.log (max 1 (a (k + 1)))) := by
+          rw [Real.exp_log (lt_of_lt_of_le zero_lt_one (le_max_left _ _))]
+        _ ≤ Real.exp (Real.log 2 *
+            (Q ((k + 1 : ℕ) : ℝ) + C' * (k + 1 : ℕ))) := by
+          apply Real.exp_le_exp.mpr
+          have := (div_le_iff₀ hlogpos).mp hratio
+          simpa [mul_comm] using this
+
+/-- The Li--Qiao prefix ratio tends to zero when the upper exponent envelope
+is only eventually valid.  The lower construction bound remains global, as
+in the asymmetric interface extracted from equation (160). -/
+theorem dyadic_prefix_ratio_of_eventual_upper
+    (a : ℕ → ℝ) (ha0 : a 0 ≤ 1) {C : ℝ}
+    (ha : ∀ k, 0 ≤ a k)
+    (hupper : ∀ᶠ k : ℕ in atTop,
+      a k ≤ Real.exp (Real.log 2 * (Q k + C * k)))
+    (hlower : ∀ m : ℕ, Real.exp (Real.log 2 * Q m) ≤ a m) :
+    Tendsto (fun m : ℕ => (∑ k ∈ Finset.range m, a k) / a m)
+      atTop (𝓝 0) := by
+  obtain ⟨C', hC', hupper'⟩ :=
+    eventual_upper_envelope_global a ha0 hupper
+  exact dyadic_prefix_ratio_tendsto_zero a
+    ((le_max_left 1 C).trans hC') ha hupper' hlower
+
 end LiQiaoCor1511

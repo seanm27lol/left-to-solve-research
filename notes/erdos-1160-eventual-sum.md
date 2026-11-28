@@ -111,7 +111,15 @@ Bläser--Li--Qiao--Rogovskyy Theorem 1.3 and Section 4.3. Corollary 15.10 uses
 Corollary 15.8 and Proposition 15.9, including the fixed-quotient extension
 counts and Pyber's prescribed-Sylow theorem.
 
-There is one small interface issue between an eventual big-(O) statement and
-the present global envelope: the finitely many initial indices must be absorbed
-by enlarging (C) (with (m=0) handled separately).  No asymptotic content is
-hidden in that normalization, but it is not yet formalized here.
+The finite-prefix interface issue is now formalized as well.
+`eventual_upper_envelope_global` absorbs all finitely many failures of an
+eventual upper exponent envelope by enlarging \(C\).  The index \(m=0\) is
+handled separately because the linear term \(Cm\) vanishes there; for the
+group-counting sequence this is the elementary identity \(g(1)=1\).
+`dyadic_prefix_ratio_of_eventual_upper` then derives the prefix/last-term
+limit directly from an eventual upper envelope and the global lower
+construction bound.
+
+This normalization does not formalize Li--Qiao Theorem 14.4, equation (160),
+itself, nor Corollary 15.10.  Those remain the substantive formal missing
+inputs described above.

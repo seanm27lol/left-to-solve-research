@@ -79,6 +79,95 @@ produce a concrete weight-24 binary hull word outside the line-difference
 family. We avoid calling this simply "non-tame" without fixing that term's
 precise convention.
 
+### A 105-point exact-cover reduction at weight 18
+
+The weight-18 branch has a second exact finite formulation which retains the
+geometry of the two affine planes. Label the nine positive selected lines by
+the points of \(\operatorname{AG}(2,3)\). Their twelve internal triple points
+are the twelve affine lines; call this set \(P\). Do the same for the nine
+negative selected lines, obtaining \(N\). Finally, every positive/negative
+pair meets at a distinct balanced point; call the resulting \(9\times9\) grid
+\(G\). The congruence \(i-j\equiv0\pmod3\) at every point and the equality
+cases in the pair count show that these
+
+\[
+ |P|+|N|+|G|=12+12+81=105
+\]
+
+points are distinct.
+
+Consider one of the other 139 lines. If it contains \(a\) points of \(P\),
+their corresponding affine lines must be mutually parallel: two nonparallel
+affine lines share a selected positive line, so their two triple points already
+lie on that selected line. Hence \(0\le a\le3\). The same argument on the
+negative side, together with the fact that the line meets each of the nine
+selected lines once, shows that it contains exactly \(a\) points of \(N\).
+The remaining intersections form a perfect matching between the \(9-3a\)
+unused positive and negative selected lines. Its trace on the 105 known points
+therefore has size \(9-a\).
+
+Up to the fixed affine-plane labels, all possible traces can be enumerated:
+
+\[
+\begin{array}{c|c|c}
+a&\text{choices}&\text{count}\\ \hline
+0&\text{a permutation of the }9\text{ grid rows}&9!=362880\\
+1&12\cdot12\text{ choices of }P,N\text{ points, then }6!&103680\\
+2&(4\binom32)^2\text{ choices, then }3!&864\\
+3&4^2\text{ parallel-class choices}&16
+\end{array}
+\]
+
+Thus there are exactly
+
+\[
+ \boxed{467440}
+\]
+
+candidate traces.
+
+The eligible pairs among the known points are precisely:
+
+* two \(P\)-points or two \(N\)-points from the same parallel class (24);
+* a \(P\)-point and an \(N\)-point (144);
+* a \(P\)-point and a grid point whose row is outside its affine triple
+  (648), and symmetrically \(N\)-to-grid (648);
+* two grid points in different rows and different columns (2592).
+
+There are 4056 eligible pairs in total. Every one must occur in exactly one
+selected trace. In addition, every \(P\)- or \(N\)-point occurs in ten traces,
+every grid point in eleven, and the numbers of traces of the four types are
+
+\[
+ (M_0,M_1,M_2,M_3)=(31-t,96+3t,12-3t,t),\qquad0\le t\le4.
+\]
+
+The pair count closes exactly:
+
+\[
+ 36M_0+28M_1+21M_2+15M_3=4056.
+\]
+
+Consequently, a weight-18 dependency forces an exact cover with 467440
+explicit columns and 4165 exact constraints (4056 pair constraints, 105 degree
+constraints, and four type counts). This is complementary to the 52-symbol
+pairwise-balanced-design reduction: it retains all intersections already
+determined by the two affine planes, while the 52-symbol formulation controls
+the points outside their selected lines.
+
+The standard-library verifier
+`python3 scripts/verify_erdos723_weight18_traces.py` regenerates the affine
+planes, all eligible pairs, and all 467440 columns. It also computes the
+complete binary linear relaxation: the column span has rank 2642, and the
+right-hand side lies in that span for every \(t=0,1,2,3,4\). Thus parity alone
+cannot eliminate any case. An integer exact-cover obstruction, a stronger
+modulus, or compatibility with the remaining 52 unknown points is essential.
+
+This is a necessary-condition reduction, not a construction or a proof that
+an order-12 plane does not exist. The affine-plane structure comes from the
+Hall--Wilkinson ternary-code framework; this explicit trace formulation is
+recorded as an independently derived specialization without a priority claim.
+
 ## The weight-21 branch
 
 Write the nonzero coefficients of (x\in K) as (a) plus signs and (b)
@@ -204,8 +293,8 @@ and negatively with the required right-hand side.
 
 For the last pattern, (-1^{21},1^8), every positive selected line has
 (z)-sum (3), so it contains at least three of the eight (+1)-points.
-The nine positive lines use at least (9\binom32=27) of their
-(inom82=28) pairs. Pair uniqueness forces nine triples covering all but
+The nine positive lines use at least \(9\binom32=27\) of their
+\(\binom82=28\) pairs. Pair uniqueness forces nine triples covering all but
 one pair. At any of the six points outside the missing pair, all seven
 incident pairs would be partitioned two at a time by the triples through
 that point, impossible because seven is odd.
@@ -393,6 +482,87 @@ does not close the weight-24 branch or decide whether a projective plane of
 order 12 exists.  The coding framework is due to Hall--Wilkinson; this exact
 profile reduction is recorded as an independently derived specialization,
 without a literature-priority claim.
+
+### Double-pencil reduction for the two-special-point pattern
+
+The fourth surviving multiset admits a further geometric reduction which is
+not present in the line-profile linear program.  Suppose
+
+\[
+ z=-2,-1^{12},1^{12},2,
+\]
+
+and call the points of value \(2,-2\) respectively \(Q_+,Q_-\). At \(Q_+\),
+let \(i,j\) be the numbers of selected positive and negative lines. Then
+\(i-j=6\). Every positive selected line through \(Q_+\) has remaining
+\(z\)-sum \(2\), and hence contains at least two of the twelve \(+1\)-points.
+If one of those lines also contained \(Q_-\), it would require at least four
+\(+1\)-points. The pencil lines are otherwise disjoint, so
+
+\[
+ 12\ge 2i+2\mathbf1_{Q_-\text{ lies on such a line}}.
+\]
+
+It follows that \(i=6,j=0\), that \(Q_-\) is on none of those six lines, and
+that each of the six lines contains exactly two \(+1\)-points and no other
+nonzero point. Reversing signs gives the dual assertion at \(Q_-\): it lies
+on exactly six negative selected lines, each containing exactly two
+\(-1\)-points and no other nonzero point. In particular, \(Q_+Q_-\) is
+unselected and contains no other nonzero point.
+
+Write \(A,N\) for those two six-line pencils and \(B,M\) for the remaining
+six positive and six negative selected lines. A \(+1\)-point lies on one
+line of \(A\), no line of \(N\), and, if \(b,m\) count its incident lines in
+\(B,M\), satisfies \(b-m=2\). Put \(r=\sum m\) over the twelve
+\(+1\)-points. Then \(\sum b=24+r\). The six lines of \(B\) have only
+\(\binom62=15\) pairs, whereas convexity gives
+
+\[
+ \sum_{z(P)=1}\binom{b_P}{2}\ge 12+2r.
+\]
+
+Consequently \(r\in\{0,1\}\). Line sums, and then sign reversal, make the
+entire selected part explicit:
+
+* if \(r=0\), all \(+1\)-points have local type \((i,j)=(3,0)\), all
+  \(-1\)-points have type \((0,3)\), every line of \(B\) contains four
+  \(+1\)-points, and every line of \(M\) contains four \(-1\)-points;
+* if \(r=1\), eleven points of each sign retain those types, while the two
+  exceptional types are \((4,1)\) and \((1,4)\). One line of \(B\) has
+  profile \(1^{-},5^{+}\), the other five have four \(+1\)-points; the
+  negative statement is symmetric.
+
+At every zero-point the selected incidences form a balanced block
+\((S_+,S_-)\) with \(|S_+|=|S_-|\le6\). Pair uniqueness turns the remaining
+problem into a literal balanced-clique exact cover. In the \(r=0\) case
+the blocks must cover 15 unused same-sign pairs on each side and all 144
+opposite-sign pairs, with
+
+\[
+ \sum |S_+|=\sum |S_-|=114.
+\]
+
+For \(r=1\), the exceptional nonzero points have already used three extra
+same-sign pairs on each side and eight opposite-sign pairs in total.  The
+corresponding budgets are 12, 12, and 136, with half-incidence sum 112.
+Thus no unspecified incidence remains in the **selected-line intersection**
+subproblem: after choosing the two degree-two marked bipartite graphs and
+the permitted nonzero selected-line blocks above, one must exactly cover the
+residual edges by balanced cliques of size at most six.  This exact cover is
+only necessary; an abstract cover need not extend to all 157 points and
+lines of a plane.
+
+Thus this survivor is reduced to two finite exact-cover shapes.  More
+geometrically, the twelve \(+1\)-points are the marked intersections of six
+\(A\)-rays with the six unselected rays from \(Q_-\), with degree two on
+both sides; the \(-1\)-points give the sign-reversed degree-two bipartite
+graph.  A completion must realize one of these two marked double pencils
+while decomposing every remaining pair of selected lines at zero-points.
+This is strictly stronger than the aggregate line profiles, but it is not a
+contradiction and does not close the weight-24 branch.
+
+Run `python3 scripts/verify_erdos723_weight24_double_pencil.py` for the exact
+finite arithmetic used in this reduction.
 
 ## Exact remaining obstruction
 
